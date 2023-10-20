@@ -4,13 +4,227 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Les petits plats</title>
-    <link rel="stylesheet" href="./dist/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="scripts/script.js"></script>
+    <link rel="stylesheet" href="./dist/output.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="./scripts/script.js"></script>
   </head>
-  <body>
-    <!--  -->
+  <body class="font-manrope bg-[#EDEDED]">
+    <header class="w-full h-screen">
+      <img
+        src="./assets/images/background-header.png"
+        class="object-cover w-full h-full absolute"
+        alt="Background header"
+      />
+      <img
+        src="./assets/logos/logo.png"
+        class="relative top-[69px] left-[69px]"
+        alt="Logo Les petits plats"
+      />
+      <div class="relative top-[300px] left-0 flex flex-col items-center">
+        <h1 class="text-[#FFD15B] text-[44px] font-anton text-center">
+          CHERCHEZ PARMI PLUS DE 1500 RECETTES <br /> DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES
+        </h1>
+        <div class="flex mt-7 relative">
+          <input
+            type="text"
+            class="w-[954px] h-[72px] font-manrope rounded-xl px-4 focus:outline-none"
+            placeholder="Recherchez une recette, un ingrédient ..."
+            id="search-input"
+          />
+          <button
+            class="absolute right-2.5 top-2.5 bg-[#1B1B1B] hover:bg-[#FFD15B] text-white hover:text-[#1B1B1B] rounded-md w-[51px] h-[51px]"
+            id="search-button"
+          >
+            <i class="fas fa-lg fa-magnifying-glass"></i>
+          </button>
+          <button
+            class="absolute right-20 top-4 text-[#7A7A7A] px-2 py-2 rounded-l"
+            id="clear-button"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="px-32 py-10 mx-auto">
+      <div class="flex justify-between">
+        <div class="flex gap-36 z-10">
+          <div id="ingredients">
+            <!-- Button ouverture dropwdown -->
+            <div class="relative inline-block text-left">
+              <div>
+                <span id="dropdown-button-ingredients" class="rounded-md shadow-sm">
+                  <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" id="dropdown-button" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="dropdown-button">
+                    Ingrédient
+                    <i id="dropdown-chevron-ingredients" class="fas fa-chevron-down ml-3 mt-0.5 transform rotate-0"></i>
+                  </button>
+                </span>
+              </div>
+            
+              <!-- Dropdown -->
+              <div id="dropdown-menu-ingredients" class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" id="dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
+                <div class="p-2">
+                  <input
+                  type="text"
+                  class="w-full border rounded-md px-2 py-1 mb-2"
+                  id="search-input-dropdown-ingredients"
+                />
+                <button
+                  class="absolute right-5 top-3 text-[#7A7A7A] rounded-md"
+                  id="search-button-dropdown-ingredients"
+                >
+                  <i class="fas fa-md fa-magnifying-glass"></i>
+                </button>
+                <button
+                  class="absolute right-10 top-1 text-[#7A7A7A] px-2 py-2 rounded-l"
+                  id="clear-button-dropdown-ingredients"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 1</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 2</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 3</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="appareils">
+            <!-- Button ouverture dropwdown -->
+            <div class="relative inline-block text-left">
+              <div>
+                <span id="dropdown-button-appareils" class="rounded-md shadow-sm">
+                  <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" id="dropdown-button" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="dropdown-button">
+                    Appareils
+                    <i id="dropdown-chevron-appareils" class="fas fa-chevron-down ml-3 mt-0.5 transform rotate-0"></i>
+                  </button>
+                </span>
+              </div>
+            
+              <!-- Dropdown -->
+              <div id="dropdown-menu-appareils" class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" id="dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
+                <div class="p-2">
+                  <input
+                  type="text"
+                  class="w-full border rounded-md px-2 py-1 mb-2"
+                  id="search-input-dropdown-appareils"
+                />
+                <button
+                  class="absolute right-5 top-3 text-[#7A7A7A] rounded-md"
+                  id="search-button-dropdown-appareils"
+                >
+                  <i class="fas fa-md fa-magnifying-glass"></i>
+                </button>
+                <button
+                  class="absolute right-10 top-1 text-[#7A7A7A] px-2 py-2 rounded-l"
+                  id="clear-button-dropdown-appareils"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 1</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 2</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 3</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="ustensiles">
+            <!-- Button ouverture dropwdown -->
+            <div class="relative inline-block text-left">
+              <div>
+                <span id="dropdown-button-ustensiles" class="rounded-md shadow-sm">
+                  <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" id="dropdown-button" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="dropdown-button">
+                    Ustensiles
+                    <i id="dropdown-chevron-ustensiles" class="fas fa-chevron-down ml-3 mt-0.5 transform rotate-0"></i>
+                  </button>
+                </span>
+              </div>
+            
+              <!-- Dropdown -->
+              <div id="dropdown-menu-ustensiles" class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" id="dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
+                <div class="p-2">
+                  <input
+                  type="text"
+                  class="w-full border rounded-md px-2 py-1 mb-2"
+                  id="search-input-dropdown-ustensiles"
+                />
+                <button
+                  class="absolute right-5 top-3 text-[#7A7A7A] rounded-md"
+                  id="search-button-dropdown-ustensiles"
+                >
+                  <i class="fas fa-md fa-magnifying-glass"></i>
+                </button>
+                <button
+                  class="absolute right-10 top-1 text-[#7A7A7A] px-2 py-2 rounded-l"
+                  id="clear-button-dropdown-ustensiles"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 1</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 2</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 3</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="font-anton color-[#1B1B1B] text-xl">1500 recettes</p>
+        </div>
+      </div>
+      <div id="list-tags" class="mt-7">
+        <ul>
+          <li class="flex items-center bg-[#FFD15B] w-max px-4 py-2 rounded-md">
+            <p>Crème de coco</p>
+            <button>
+              <i class="fas fa-times ml-5"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div id="list-recettes" class="mt-11">
+        <ul class="flex flex-row gap-12">
+          <li class="flex w-[380px] flex-col rounded-[21px] bg-white relative">
+            <div class="bg-[#FFD15B] rounded-full absolute top-3 right-3">
+              <p class="font-manrope text-[#1B1B1B] text-xs px-5 py-1">1Omin</p>
+            </div>
+            <img src="./assets/images/Recette01.jpg" class="w-full object-cover h-[253px] rounded-tl-[21px] rounded-tr-[21px]" alt="Recette 1">
+            <div class="px-6 pb-[61px]">
+              <h4 class="font-anton color-[#1B1B1B] text-xl mt-8">Limonade de coco</h3>
+              <p class="font-manrope color-[#7A7A7A] text-xs mt-8">RECETTE</p>
+              <p class="mt-3 font-manrope color-[#1B1B1B] text-sm">Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.</p>
+              <p class="font-manrope color-[#7A7A7A] text-xs mt-8">Ingrédients</p>  
+              <ul class="w-full flex flex-row flex-wrap">
+                <li class="w-1/2 mt-5">
+                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
+                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
+                </li>
+                <li class="w-1/2 mt-5">
+                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
+                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
+                </li>
+                <li class="w-1/2 mt-5">
+                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
+                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
+                </li>
+                <li class="w-1/2 mt-5">
+                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
+                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
+                </li>
+                <li class="w-1/2 mt-5">
+                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
+                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
   </body>
 </html>

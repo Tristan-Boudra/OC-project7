@@ -1,0 +1,1 @@
+Pour lancer tailwind: npx tailwindcss -i ./styles/style.css -o ./dist/output.css --watch 

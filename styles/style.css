@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Dans votre fichier CSS ou dans un fichier CSS dédié */
+@font-face {
+  font-family: "Anton";
+  src: url("/assets/fonts/Anton/Anton-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url("/assets/fonts/Manrope/Manrope-VariableFont_wght.ttf") format("truetype");
+}
+
+
