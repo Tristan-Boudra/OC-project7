@@ -12,7 +12,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script src="./scripts/script.js"></script>
+    <script type="module" src="./scripts/script.js"></script>
+    <script type="module" src="./data/recipes.js"></script>
   </head>
   <body class="font-manrope bg-[#EDEDED]">
     <header class="w-full h-screen">
@@ -174,7 +175,7 @@
           </div>
         </div>
         <div>
-          <p class="font-anton color-[#1B1B1B] text-xl">1500 recettes</p>
+          <p class="font-anton color-[#1B1B1B] text-xl"><span id="numbers-recipe">1500</span> recettes</p>
         </div>
       </div>
       <div id="list-tags" class="mt-7">
@@ -187,43 +188,8 @@
           </li>
         </ul>
       </div>
-      <div id="list-recettes" class="mt-11">
-        <ul class="flex flex-row gap-12">
-          <li class="flex w-[380px] flex-col rounded-[21px] bg-white relative">
-            <div class="bg-[#FFD15B] rounded-full absolute top-3 right-3">
-              <p class="font-manrope text-[#1B1B1B] text-xs px-5 py-1">1Omin</p>
-            </div>
-            <img src="./assets/images/Recette01.jpg" class="w-full object-cover h-[253px] rounded-tl-[21px] rounded-tr-[21px]" alt="Recette 1">
-            <div class="px-6 pb-[61px]">
-              <h4 class="font-anton color-[#1B1B1B] text-xl mt-8">Limonade de coco</h3>
-              <p class="font-manrope color-[#7A7A7A] text-xs mt-8">RECETTE</p>
-              <p class="mt-3 font-manrope color-[#1B1B1B] text-sm">Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.</p>
-              <p class="font-manrope color-[#7A7A7A] text-xs mt-8">Ingrédients</p>  
-              <ul class="w-full flex flex-row flex-wrap">
-                <li class="w-1/2 mt-5">
-                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
-                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
-                </li>
-                <li class="w-1/2 mt-5">
-                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
-                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
-                </li>
-                <li class="w-1/2 mt-5">
-                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
-                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
-                </li>
-                <li class="w-1/2 mt-5">
-                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
-                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
-                </li>
-                <li class="w-1/2 mt-5">
-                  <p class="font-manrope color-[#1B1B1B] text-sm font-medium">Lait de coco</p>
-                  <p class="font-manrope color-[#7A7A7A] text-sm">400ml</p>
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
+      <div id="list-recettes" class="mt-10">
+        <ul id="ul-list-recettes" class="flex flex-row flex-wrap gap-12"></ul>
       </div>
     </main>
   </body>
