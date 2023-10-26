@@ -67,75 +67,89 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Rotation chevron dropdown on click
-  // Ingredients
-  const dropdownButtonIngredients = document.getElementById(
-    "dropdown-button-ingredients"
-  );
-  const chevronIconIngredients = document.getElementById(
-    "dropdown-chevron-ingredients"
-  );
+  function setupDropdown(buttonId, menuId, chevronId) {
+    const button = document.getElementById(buttonId);
+    const menu = document.getElementById(menuId);
+    const chevron = document.getElementById(chevronId);
 
-  const dropdownMenuIngredients = document.getElementById(
-    "dropdown-menu-ingredients"
-  );
-  dropdownMenuIngredients.classList.add("hidden");
+    menu.style.display = "none";
 
-  toggleDropdown(
-    chevronIconIngredients,
-    dropdownButtonIngredients,
-    dropdownMenuIngredients
-  );
+    // Ouvrir/fermer la dropdown lors du clic sur le bouton
+    button.addEventListener("click", function () {
+      if (menu.style.display === "block") {
+        menu.style.display = "none";
+        chevron.classList.remove("rotate-180");
+      } else {
+        menu.style.display = "block";
+        chevron.classList.add("rotate-180");
+      }
+    });
 
-  // Appareils
-  const dropdownButtonAppareils = document.getElementById(
-    "dropdown-button-appareils"
-  );
-  const chevronIconAppareils = document.getElementById(
-    "dropdown-chevron-appareils"
-  );
-
-  const dropdownMenuAppareils = document.getElementById(
-    "dropdown-menu-appareils"
-  );
-  dropdownMenuAppareils.classList.add("hidden");
-
-  toggleDropdown(
-    chevronIconAppareils,
-    dropdownButtonAppareils,
-    dropdownMenuAppareils
-  );
-
-  // Appareils
-  const dropdownButtonUstensiles = document.getElementById(
-    "dropdown-button-ustensiles"
-  );
-  const chevronIconUstensiles = document.getElementById(
-    "dropdown-chevron-ustensiles"
-  );
-
-  const dropdownMenuUstensiles = document.getElementById(
-    "dropdown-menu-ustensiles"
-  );
-  dropdownMenuUstensiles.classList.add("hidden");
-
-  toggleDropdown(
-    chevronIconUstensiles,
-    dropdownButtonUstensiles,
-    dropdownMenuUstensiles
-  );
-
-  function toggleDropdown(chevronIcon, dropdownButton, dropdownMenu) {
-    dropdownButton.addEventListener("click", function () {
-      chevronIcon.classList.toggle("rotate-0");
-      chevronIcon.classList.toggle("rotate-180");
-      dropdownMenu.classList.toggle("hidden");
+    // Fermer la dropdown lors d'un clic en dehors
+    document.addEventListener("click", function (event) {
+      if (!menu.contains(event.target) && !button.contains(event.target)) {
+        menu.style.display = "none";
+        chevron.classList.remove("rotate-180");
+      }
     });
   }
-
+  // Nombres totales de recettes
   function countRecipes() {
     const numbersRecipe = document.getElementById("numbers-recipe");
     numbersRecipe.textContent = recipes.length;
+  }
+
+  // Récupération des ingrédients
+  function getUniqueIngredients(recipes) {
+    // Initialise un ensemble car un ensemble ne peut pas stocker des doublons
+    const uniqueIngredients = new Set();
+
+    // Parcour chaque recette
+    recipes.forEach((recipe) => {
+      // Parcour chaque ingrédient de la recette
+      recipe.ingredients.forEach((ingredient) => {
+        const oneIngredient = ingredient.ingredient;
+        uniqueIngredients.add(oneIngredient.toLowerCase());
+      });
+    });
+
+    // Convertie l'ensemble en tableau
+    const allIngredients = Array.from(uniqueIngredients);
+    allIngredients.sort();
+
+    return allIngredients;
+  }
+
+  // Récupération des appareils
+  function getUniqueAppareils(recipes) {
+    const uniqueAppareils = new Set();
+
+    recipes.forEach((recipe) => {
+      uniqueAppareils.add(recipe.appliance);
+    });
+
+    const allAppareils = Array.from(uniqueAppareils);
+    allAppareils.sort();
+
+    return allAppareils;
+  }
+
+  // Récupération des ustensiles
+  function getUniqueUstensiles(recipes) {
+    const uniqueUstensiles = new Set();
+
+    recipes.forEach((recipe) => {
+      if (Array.isArray(recipe.ustensils)) {
+        recipe.ustensils.forEach((ustensil) => {
+          uniqueUstensiles.add(ustensil.toLowerCase());
+        });
+      }
+    });
+
+    const allUstensiles = Array.from(uniqueUstensiles);
+    allUstensiles.sort();
+
+    return allUstensiles;
   }
 
   // Récupération des recettes
@@ -152,12 +166,138 @@ document.addEventListener("DOMContentLoaded", function () {
     return recipes;
   }
 
+  function capitalizeFirstLetter(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }
+
+  function createIngredientsDropdown() {
+    const allIngredients = getUniqueIngredients(recipes);
+
+    allIngredients.forEach((ingredient) => {
+      const listIngredientsDiv = document.getElementById("list-ingredients");
+      const ul = document.getElementById("ul-dropdown-ingredients");
+      var li = document.createElement("li");
+
+      li.addEventListener("click", function () {
+        addTags(ingredient, li);
+      });
+
+      li.classList.add(
+        "block",
+        "px-4",
+        "py-2",
+        "text-sm",
+        "text-gray-700",
+        "hover:bg-[#FFD15B]"
+      );
+      li.setAttribute("role", "menuitem");
+
+      li.textContent = capitalizeFirstLetter(ingredient);
+
+      ul.appendChild(li);
+      listIngredientsDiv.appendChild(ul);
+    });
+  }
+
+  function createAppareilsDropdown() {
+    const allAppareils = getUniqueAppareils(recipes);
+
+    allAppareils.forEach((appareil) => {
+      const listIngredientsDiv = document.getElementById("list-appareils");
+      const ul = document.getElementById("ul-dropdown-appareils");
+      var li = document.createElement("li");
+
+      li.addEventListener("click", function () {
+        addTags(appareil, li);
+      });
+
+      li.classList.add(
+        "block",
+        "px-4",
+        "py-2",
+        "text-sm",
+        "text-gray-700",
+        "hover:bg-[#FFD15B]"
+      );
+      li.setAttribute("role", "menuitem");
+
+      li.textContent = capitalizeFirstLetter(appareil);
+
+      ul.appendChild(li);
+      listIngredientsDiv.appendChild(ul);
+    });
+  }
+
+  function createUstensilesDropdown() {
+    const allUstensiles = getUniqueUstensiles(recipes);
+
+    allUstensiles.forEach((ustensile) => {
+      const listIngredientsDiv = document.getElementById("list-ustensiles");
+      const ul = document.getElementById("ul-dropdown-ustensiles");
+      var li = document.createElement("li");
+
+      li.addEventListener("click", function () {
+        addTags(ustensile, li);
+      });
+
+      li.classList.add(
+        "block",
+        "px-4",
+        "py-2",
+        "text-sm",
+        "text-gray-700",
+        "hover:bg-[#FFD15B]"
+      );
+      li.setAttribute("role", "menuitem");
+
+      li.textContent = capitalizeFirstLetter(ustensile);
+
+      ul.appendChild(li);
+      listIngredientsDiv.appendChild(ul);
+    });
+  }
+
+  let allTags = [];
+
+  function addTags(items) {
+    if (!allTags.includes(items)) {
+      const li = document.createElement("li");
+      li.className =
+        "flex items-center bg-[#FFD15B] w-max px-4 py-2 rounded-md";
+
+      const paragraph = document.createElement("p");
+      paragraph.textContent = capitalizeFirstLetter(items);
+      allTags.push(items);
+
+      const button = document.createElement("button");
+
+      const icon = document.createElement("i");
+      icon.className = "fas fa-times ml-5";
+      icon.addEventListener("click", function () {
+        // On enlève le tags du tableau allTags
+        const index = allTags.indexOf(items);
+        if (index !== -1) {
+          allTags.splice(index, 1);
+        }
+        li.remove();
+      });
+
+      button.appendChild(icon);
+
+      li.appendChild(paragraph);
+      li.appendChild(button);
+
+      const container = document.getElementById("ul-list-tags");
+      container.appendChild(li);
+    }
+  }
+
   // Création d'une recette
   function createRecipe(time, image, name, description, ingredients) {
-    if(image){
+    if (image) {
       const ul = document.getElementById("ul-list-recettes");
       const listRecettesDiv = document.getElementById("list-recettes");
-  
+
       const li = document.createElement("li");
       li.classList.add(
         "flex",
@@ -167,7 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "bg-white",
         "relative"
       );
-  
+
       const timeDiv = document.createElement("div");
       timeDiv.classList.add(
         "bg-[#FFD15B]",
@@ -176,7 +316,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "top-3",
         "right-3"
       );
-  
+
       const timeP = document.createElement("p");
       timeP.classList.add(
         "font-manrope",
@@ -186,7 +326,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "py-1"
       );
       timeP.textContent = time + " min";
-  
+
       const img = document.createElement("img");
       img.src = "./assets/images/" + `${image}`;
       img.classList.add(
@@ -197,19 +337,23 @@ document.addEventListener("DOMContentLoaded", function () {
         "rounded-tr-[21px]"
       );
       img.alt = name;
-      console.log(img);
-  
+
       const contentDiv = document.createElement("div");
       contentDiv.classList.add("px-6", "pb-[61px]");
-  
+
       const titleH4 = document.createElement("h4");
       titleH4.classList.add("font-anton", "color-[#1B1B1B]", "text-xl", "mt-8");
       titleH4.textContent = name;
-  
+
       const recette = document.createElement("p");
-      recette.classList.add("font-manrope", "color-[#7A7A7A]", "text-xs", "mt-8");
+      recette.classList.add(
+        "font-manrope",
+        "color-[#7A7A7A]",
+        "text-xs",
+        "mt-8"
+      );
       recette.textContent = "RECETTE";
-  
+
       const descriptionP = document.createElement("p");
       descriptionP.classList.add(
         "font-manrope",
@@ -218,7 +362,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "mt-3"
       );
       descriptionP.textContent = description;
-  
+
       const ingredientsTitle = document.createElement("p");
       ingredientsTitle.classList.add(
         "font-manrope",
@@ -227,18 +371,18 @@ document.addEventListener("DOMContentLoaded", function () {
         "mt-8"
       );
       ingredientsTitle.textContent = "Ingrédients";
-  
+
       const ingredientsUl = document.createElement("ul");
       ingredientsUl.classList.add("w-full", "flex", "flex-row", "flex-wrap");
-  
+
       const ingredientsData = ingredients;
-  
+
       for (const ingredient in ingredientsData) {
         const currentItem = ingredientsData[ingredient];
-  
+
         const li = document.createElement("li");
         li.classList.add("w-1/2", "mt-5");
-  
+
         const name = document.createElement("p");
         name.classList.add(
           "font-manrope",
@@ -247,18 +391,19 @@ document.addEventListener("DOMContentLoaded", function () {
           "font-medium"
         );
         name.textContent = currentItem.ingredient;
-  
+
         const quantity = document.createElement("p");
         quantity.classList.add("font-manrope", "color-[#7A7A7A]", "text-sm");
         currentItem.unit
-          ? (quantity.textContent = currentItem.quantity + " " + currentItem.unit)
+          ? (quantity.textContent =
+              currentItem.quantity + " " + currentItem.unit)
           : (quantity.textContent = currentItem.quantity);
-  
+
         li.appendChild(name);
         li.appendChild(quantity);
         ingredientsUl.appendChild(li);
       }
-  
+
       // Ajoute les éléments à la structure DOM
       timeDiv.appendChild(timeP);
       li.appendChild(timeDiv);
@@ -269,16 +414,43 @@ document.addEventListener("DOMContentLoaded", function () {
       contentDiv.appendChild(ingredientsTitle);
       contentDiv.appendChild(ingredientsUl);
       li.appendChild(contentDiv);
-  
+
       ul.appendChild(li);
       listRecettesDiv.appendChild(ul);
     }
   }
 
   function init() {
+    // Récupeère toutes les recettes
     getRecipes();
+
+    // Créer une recette
     createRecipe();
+
+    // Nombre total de recettes
     countRecipes();
+
+    // Création des dropwdowns
+    createIngredientsDropdown();
+    createAppareilsDropdown();
+    createUstensilesDropdown();
+
+    // Appel de la fonction pour configurer les trois dropdowns
+    setupDropdown(
+      "dropdown-button-ingredients",
+      "dropdown-menu-ingredients",
+      "dropdown-chevron-ingredients"
+    );
+    setupDropdown(
+      "dropdown-button-appareils",
+      "dropdown-menu-appareils",
+      "dropdown-chevron-appareils"
+    );
+    setupDropdown(
+      "dropdown-button-ustensiles",
+      "dropdown-menu-ustensiles",
+      "dropdown-chevron-ustensiles"
+    );
   }
 
   init();

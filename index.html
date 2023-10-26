@@ -29,7 +29,8 @@
       />
       <div class="relative top-[300px] left-0 flex flex-col items-center">
         <h1 class="text-[#FFD15B] text-[44px] font-anton text-center">
-          CHERCHEZ PARMI PLUS DE 1500 RECETTES <br /> DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES
+          CHERCHEZ PARMI PLUS DE 1500 RECETTES <br />
+          DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES
         </h1>
         <div class="flex mt-7 relative">
           <input
@@ -60,37 +61,58 @@
             <!-- Button ouverture dropwdown -->
             <div class="relative inline-block text-left">
               <div>
-                <span id="dropdown-button-ingredients" class="rounded-md shadow-sm">
-                  <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" id="dropdown-button" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="dropdown-button">
+                <span
+                  id="dropdown-button-ingredients"
+                  class="rounded-md shadow-sm"
+                >
+                  <button
+                    type="button"
+                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    id="dropdown-button"
+                    aria-haspopup="listbox"
+                    aria-expanded="true"
+                    aria-labelledby="dropdown-button"
+                  >
                     Ingrédient
-                    <i id="dropdown-chevron-ingredients" class="fas fa-chevron-down ml-3 mt-0.5 transform rotate-0"></i>
+                    <i
+                      id="dropdown-chevron-ingredients"
+                      class="fas fa-chevron-down ml-3 mt-0.5 transform rotate-0"
+                    ></i>
                   </button>
                 </span>
               </div>
-            
+
               <!-- Dropdown -->
-              <div id="dropdown-menu-ingredients" class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" id="dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
-                <div class="p-2">
+              <div
+                id="dropdown-menu-ingredients"
+                class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                id="dropdown-menu"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="dropdown-button"
+              >
+                <div id="list-ingredients" class="p-2 overflow-auto h-[300px]">
                   <input
-                  type="text"
-                  class="w-full border rounded-md px-2 py-1 mb-2"
-                  id="search-input-dropdown-ingredients"
-                />
-                <button
-                  class="absolute right-5 top-3 text-[#7A7A7A] rounded-md"
-                  id="search-button-dropdown-ingredients"
-                >
-                  <i class="fas fa-md fa-magnifying-glass"></i>
-                </button>
-                <button
-                  class="absolute right-10 top-1 text-[#7A7A7A] px-2 py-2 rounded-l"
-                  id="clear-button-dropdown-ingredients"
-                >
-                  <i class="fas fa-times"></i>
-                </button>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 1</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 2</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 3</a>
+                    type="text"
+                    class="w-max border rounded-md px-2 py-1 mb-2 absolute"
+                    id="search-input-dropdown-ingredients"
+                  />
+                  <button
+                    class="absolute right-8 top-3 text-[#7A7A7A] rounded-md"
+                    id="search-button-dropdown-ingredients"
+                  >
+                    <i class="fas fa-md fa-magnifying-glass"></i>
+                  </button>
+                  <button
+                    class="absolute right-12 top-1 text-[#7A7A7A] px-2 py-2 rounded-l"
+                    id="clear-button-dropdown-ingredients"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                  <ul
+                    id="ul-dropdown-ingredients"
+                    class="mt-[45px] max-h-56 overflow-y-auto"
+                  ></ul>
                 </div>
               </div>
             </div>
@@ -99,37 +121,58 @@
             <!-- Button ouverture dropwdown -->
             <div class="relative inline-block text-left">
               <div>
-                <span id="dropdown-button-appareils" class="rounded-md shadow-sm">
-                  <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" id="dropdown-button" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="dropdown-button">
+                <span
+                  id="dropdown-button-appareils"
+                  class="rounded-md shadow-sm"
+                >
+                  <button
+                    type="button"
+                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    id="dropdown-button"
+                    aria-haspopup="listbox"
+                    aria-expanded="true"
+                    aria-labelledby="dropdown-button"
+                  >
                     Appareils
-                    <i id="dropdown-chevron-appareils" class="fas fa-chevron-down ml-3 mt-0.5 transform rotate-0"></i>
+                    <i
+                      id="dropdown-chevron-appareils"
+                      class="fas fa-chevron-down ml-3 mt-0.5 transform rotate-0"
+                    ></i>
                   </button>
                 </span>
               </div>
-            
+
               <!-- Dropdown -->
-              <div id="dropdown-menu-appareils" class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" id="dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
-                <div class="p-2">
+              <div
+                id="dropdown-menu-appareils"
+                class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                id="dropdown-menu"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="dropdown-button"
+              >
+                <div id="list-appareils" class="p-2 overflow-auto h-[300px]">
                   <input
-                  type="text"
-                  class="w-full border rounded-md px-2 py-1 mb-2"
-                  id="search-input-dropdown-appareils"
-                />
-                <button
-                  class="absolute right-5 top-3 text-[#7A7A7A] rounded-md"
-                  id="search-button-dropdown-appareils"
-                >
-                  <i class="fas fa-md fa-magnifying-glass"></i>
-                </button>
-                <button
-                  class="absolute right-10 top-1 text-[#7A7A7A] px-2 py-2 rounded-l"
-                  id="clear-button-dropdown-appareils"
-                >
-                  <i class="fas fa-times"></i>
-                </button>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 1</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 2</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 3</a>
+                    type="text"
+                    class="w-max border rounded-md px-2 py-1 mb-2 absolute"
+                    id="search-input-dropdown-appareils"
+                  />
+                  <button
+                    class="absolute right-8 top-3 text-[#7A7A7A] rounded-md"
+                    id="search-button-dropdown-appareils"
+                  >
+                    <i class="fas fa-md fa-magnifying-glass"></i>
+                  </button>
+                  <button
+                    class="absolute right-12 top-1 text-[#7A7A7A] px-2 py-2 rounded-l"
+                    id="clear-button-dropdown-appareils"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                  <ul
+                    id="ul-dropdown-appareils"
+                    class="mt-[45px] max-h-56 overflow-y-auto"
+                  ></ul>
                 </div>
               </div>
             </div>
@@ -138,55 +181,71 @@
             <!-- Button ouverture dropwdown -->
             <div class="relative inline-block text-left">
               <div>
-                <span id="dropdown-button-ustensiles" class="rounded-md shadow-sm">
-                  <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" id="dropdown-button" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="dropdown-button">
+                <span
+                  id="dropdown-button-ustensiles"
+                  class="rounded-md shadow-sm"
+                >
+                  <button
+                    type="button"
+                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    id="dropdown-button"
+                    aria-haspopup="listbox"
+                    aria-expanded="true"
+                    aria-labelledby="dropdown-button"
+                  >
                     Ustensiles
-                    <i id="dropdown-chevron-ustensiles" class="fas fa-chevron-down ml-3 mt-0.5 transform rotate-0"></i>
+                    <i
+                      id="dropdown-chevron-ustensiles"
+                      class="fas fa-chevron-down ml-3 mt-0.5 transform rotate-0"
+                    ></i>
                   </button>
                 </span>
               </div>
-            
+
               <!-- Dropdown -->
-              <div id="dropdown-menu-ustensiles" class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" id="dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button">
-                <div class="p-2">
+              <div
+                id="dropdown-menu-ustensiles"
+                class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                id="dropdown-menu"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="dropdown-button"
+              >
+                <div id="list-ustensiles" class="p-2 overflow-auto h-[300px]">
                   <input
-                  type="text"
-                  class="w-full border rounded-md px-2 py-1 mb-2"
-                  id="search-input-dropdown-ustensiles"
-                />
-                <button
-                  class="absolute right-5 top-3 text-[#7A7A7A] rounded-md"
-                  id="search-button-dropdown-ustensiles"
-                >
-                  <i class="fas fa-md fa-magnifying-glass"></i>
-                </button>
-                <button
-                  class="absolute right-10 top-1 text-[#7A7A7A] px-2 py-2 rounded-l"
-                  id="clear-button-dropdown-ustensiles"
-                >
-                  <i class="fas fa-times"></i>
-                </button>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 1</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 2</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FFD15B]" role="menuitem">Option 3</a>
+                    type="text"
+                    class="w-max border rounded-md px-2 py-1 mb-2 absolute"
+                    id="search-input-dropdown-ustensiles"
+                  />
+                  <button
+                    class="absolute right-8 top-3 text-[#7A7A7A] rounded-md"
+                    id="search-button-dropdown-ustensiles"
+                  >
+                    <i class="fas fa-md fa-magnifying-glass"></i>
+                  </button>
+                  <button
+                    class="absolute right-12 top-1 text-[#7A7A7A] px-2 py-2 rounded-l"
+                    id="clear-button-dropdown-ustensiles"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                  <ul
+                    id="ul-dropdown-ustensiles"
+                    class="mt-[45px] max-h-56 overflow-y-auto"
+                  ></ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <p class="font-anton color-[#1B1B1B] text-xl"><span id="numbers-recipe">1500</span> recettes</p>
+          <p class="font-anton color-[#1B1B1B] text-xl">
+            <span id="numbers-recipe">1500</span> recettes
+          </p>
         </div>
       </div>
       <div id="list-tags" class="mt-7">
-        <ul>
-          <li class="flex items-center bg-[#FFD15B] w-max px-4 py-2 rounded-md">
-            <p>Crème de coco</p>
-            <button>
-              <i class="fas fa-times ml-5"></i>
-            </button>
-          </li>
-        </ul>
+        <ul id="ul-list-tags" class="flex flex-wrap gap-10"></ul>
       </div>
       <div id="list-recettes" class="mt-10">
         <ul id="ul-list-recettes" class="flex flex-row flex-wrap gap-12"></ul>
