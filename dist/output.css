@@ -709,10 +709,6 @@ video {
   display: inline-flex;
 }
 
-.hidden {
-  display: none;
-}
-
 .h-\[253px\] {
   height: 253px;
 }

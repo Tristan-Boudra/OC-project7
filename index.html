@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Les petits plats</title>
-    <link rel="stylesheet" href="./dist/output.css" />
+    <link rel="stylesheet" href="./dist/output.css"/>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
       integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+      referrerpolicy="no-referrer"/>
     <script type="module" src="./scripts/script.js"></script>
     <script type="module" src="./data/recipes.js"></script>
   </head>
@@ -68,10 +67,9 @@
                   <button
                     type="button"
                     class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-                    id="dropdown-button"
+                    id="button-ingredients"
                     aria-haspopup="listbox"
                     aria-expanded="true"
-                    aria-labelledby="dropdown-button"
                   >
                     Ingrédient
                     <i
@@ -86,10 +84,8 @@
               <div
                 id="dropdown-menu-ingredients"
                 class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-                id="dropdown-menu"
                 role="menu"
                 aria-orientation="vertical"
-                aria-labelledby="dropdown-button"
               >
                 <div id="list-ingredients" class="p-2 overflow-auto h-[300px]">
                   <input
@@ -128,10 +124,9 @@
                   <button
                     type="button"
                     class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-                    id="dropdown-button"
+                    id="button-appareils"
                     aria-haspopup="listbox"
                     aria-expanded="true"
-                    aria-labelledby="dropdown-button"
                   >
                     Appareils
                     <i
@@ -146,10 +141,8 @@
               <div
                 id="dropdown-menu-appareils"
                 class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-                id="dropdown-menu"
                 role="menu"
                 aria-orientation="vertical"
-                aria-labelledby="dropdown-button"
               >
                 <div id="list-appareils" class="p-2 overflow-auto h-[300px]">
                   <input
@@ -188,10 +181,9 @@
                   <button
                     type="button"
                     class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-                    id="dropdown-button"
+                    id="button-ustensiles"
                     aria-haspopup="listbox"
                     aria-expanded="true"
-                    aria-labelledby="dropdown-button"
                   >
                     Ustensiles
                     <i
@@ -206,10 +198,8 @@
               <div
                 id="dropdown-menu-ustensiles"
                 class="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-                id="dropdown-menu"
                 role="menu"
                 aria-orientation="vertical"
-                aria-labelledby="dropdown-button"
               >
                 <div id="list-ustensiles" class="p-2 overflow-auto h-[300px]">
                   <input
