@@ -109,7 +109,8 @@ document.addEventListener("DOMContentLoaded", function () {
       // Parcour chaque ingrédient de la recette
       recipe.ingredients.forEach((ingredient) => {
         const oneIngredient = ingredient.ingredient;
-        uniqueIngredients.add(oneIngredient.toLowerCase());
+        const itemIngredient = removeAccents(oneIngredient);
+        uniqueIngredients.add(itemIngredient.toLowerCase());
       });
     });
 
@@ -141,7 +142,8 @@ document.addEventListener("DOMContentLoaded", function () {
     recipes.forEach((recipe) => {
       if (Array.isArray(recipe.ustensils)) {
         recipe.ustensils.forEach((ustensil) => {
-          uniqueUstensiles.add(ustensil.toLowerCase());
+          const itemUstensil = removeAccents(ustensil);
+          uniqueUstensiles.add(itemUstensil.toLowerCase());
         });
       }
     });
@@ -164,6 +166,18 @@ document.addEventListener("DOMContentLoaded", function () {
       );
     }
     return recipes;
+  }
+
+  function removeAccents(input) {
+    const accents = 'ÀÁÂÃÄÅàáâãäåÇçèéêëÈÉÊËìíîïÌÍÎÏñÑÒÓÔÕÖØòóôõöøÙÚÛÜùúûüÝÿ';
+    const accentsOut = 'AAAAAAaaaaaaCcEEEEEEEEiiiiIIIIiiNNOOOOOOOooooooUUUUuuuuYy';
+    return input
+      .split('')
+      .map((letter) => {
+        const index = accents.indexOf(letter);
+        return index !== -1 ? accentsOut[index] : letter;
+      })
+      .join('');
   }
 
   function capitalizeFirstLetter(word) {
