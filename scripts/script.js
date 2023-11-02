@@ -272,17 +272,50 @@ document.addEventListener("DOMContentLoaded", function () {
         "hover:bg-[#FFD15B]"
       );
       li.setAttribute("role", "menuitem");
+      li.setAttribute("id", ingredient);
 
       li.textContent = capitalizeFirstLetter(ingredient);
 
       ul.appendChild(li);
       listIngredientsDiv.appendChild(ul);
     });
+
+    const input = document.getElementById("search-input-dropdown-ingredients");
+    input.addEventListener("input", function () {
+      const inputValue = input.value.toLowerCase();
+      for (const ingredient of allIngredients) {
+        const ingredientElement = document.getElementById(ingredient);
+
+        if (ingredientElement) {
+          if (ingredient.includes(inputValue)) {
+            ingredientElement.style.display = "block";
+          } else {
+            ingredientElement.style.display = "none";
+          }
+        }
+      }
+    });
+
+    input.addEventListener("blur", function () {
+      input.value = "";
+      clearButton.style.display = "none";
+      allIngredients.forEach((ingredient) => {
+        const ingredientElement = document.getElementById(ingredient);
+        ingredientElement.style.display = "block";
+      })
+    });
+
+    const clearButton = document.getElementById("clear-button-dropdown-ingredients");
+    clearButton.addEventListener("click", function () {
+      allIngredients.forEach((ingredient) => {
+        const ingredientElement = document.getElementById(ingredient);
+        ingredientElement.style.display = "block";
+      })
+    });
   }
 
   function createAppareilsDropdown() {
     const allAppareils = option1.getUniqueAppareils();
-
     allAppareils.forEach((appareil) => {
       const listIngredientsDiv = document.getElementById("list-appareils");
       const ul = document.getElementById("ul-dropdown-appareils");
@@ -301,17 +334,50 @@ document.addEventListener("DOMContentLoaded", function () {
         "hover:bg-[#FFD15B]"
       );
       li.setAttribute("role", "menuitem");
+      li.setAttribute("id", appareil);
 
       li.textContent = capitalizeFirstLetter(appareil);
 
       ul.appendChild(li);
       listIngredientsDiv.appendChild(ul);
     });
+
+    const input = document.getElementById("search-input-dropdown-appareils");
+    input.addEventListener("input", function () {
+      const inputValue = input.value;
+
+      for (const appareil of allAppareils) {
+        const appareilElement = document.getElementById(appareil);
+        if (appareilElement) {
+          if (appareil.includes(inputValue)) {
+            appareilElement.style.display = "block";
+          } else {
+            appareilElement.style.display = "none";
+          }
+        }
+      }
+    });
+
+    input.addEventListener("blur", function () {
+      input.value = "";
+      clearButton.style.display = "none";
+      allAppareils.forEach((appareil) => {
+        const appareilElement = document.getElementById(appareil);
+        appareilElement.style.display = "block";
+      })
+    });
+
+    const clearButton = document.getElementById("clear-button-dropdown-appareils");
+    clearButton.addEventListener("click", function () {
+      allAppareils.forEach((appareil) => {
+        const appareilElement = document.getElementById(appareil);
+        appareilElement.style.display = "block";
+      })
+    });
   }
 
   function createUstensilesDropdown() {
     const allUstensiles = option1.getUniqueUstensiles();
-
     allUstensiles.forEach((ustensile) => {
       const listIngredientsDiv = document.getElementById("list-ustensiles");
       const ul = document.getElementById("ul-dropdown-ustensiles");
@@ -330,11 +396,46 @@ document.addEventListener("DOMContentLoaded", function () {
         "hover:bg-[#FFD15B]"
       );
       li.setAttribute("role", "menuitem");
+      li.setAttribute("id", ustensile);
 
       li.textContent = capitalizeFirstLetter(ustensile);
 
       ul.appendChild(li);
       listIngredientsDiv.appendChild(ul);
+    });
+
+    const input = document.getElementById("search-input-dropdown-ustensiles");
+    input.addEventListener("input", function () {
+      const inputValue = input.value.toLowerCase();
+
+      for (const ustensile of allUstensiles) {
+        const ustensilElement = document.getElementById(ustensile);
+
+        if (ustensilElement) {
+          if (ustensile.includes(inputValue)) {
+            ustensilElement.style.display = "block";
+          } else {
+            ustensilElement.style.display = "none";
+          }
+        }
+      }
+    });
+
+    input.addEventListener("blur", function () {
+      input.value = "";
+      clearButton.style.display = "none";
+      allUstensiles.forEach((ustensile) => {
+        const ustensilElement = document.getElementById(ustensile);
+        ustensilElement.style.display = "block";
+      })
+    });
+
+    const clearButton = document.getElementById("clear-button-dropdown-ustensiles");
+    clearButton.addEventListener("click", function () {
+      allUstensiles.forEach((ustensile) => {
+        const ustensilElement = document.getElementById(ustensile);
+        ustensilElement.style.display = "block";
+      })
     });
   }
 

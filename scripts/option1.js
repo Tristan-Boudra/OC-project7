@@ -40,7 +40,8 @@ export class Option1 {
     const uniqueAppareils = new Set();
 
     recipes.forEach((recipe) => {
-      uniqueAppareils.add(recipe.appliance);
+      const oneRecipes = recipe.appliance;
+      uniqueAppareils.add(oneRecipes.toLowerCase());
     });
 
     const allAppareils = Array.from(uniqueAppareils);
