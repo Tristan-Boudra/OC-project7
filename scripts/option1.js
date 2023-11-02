@@ -74,32 +74,16 @@ export class Option1 {
     const ul = document.getElementById("ul-list-recettes");
 
     const handleInput = () => {
-      const inputValue = input.value;
-      if (inputValue.length >= 3) {
-        let searchResults = [];
+      const inputValue = input.value.toLowerCase();
+      let searchResults = [];
 
+      if (inputValue.length >= 3) {
         for (let i = 0; i < recipes.length; i++) {
           const recipe = recipes[i];
           const recipeName = recipe.name.toLowerCase();
-          const searchInput = inputValue.toLowerCase();
+          const ingredients = recipe.ingredients;
 
-          let found = false;
-
-          for (let j = 0; j <= recipeName.length - searchInput.length; j++) {
-            let match = true;
-            for (let k = 0; k < searchInput.length; k++) {
-              if (recipeName[j + k] !== searchInput[k]) {
-                match = false;
-                break;
-              }
-            }
-            if (match) {
-              found = true;
-              break;
-            }
-          }
-
-          if (found) {
+          if (recipeName.includes(inputValue)) {
             searchResults.push({
               name: recipe.name,
               image: recipe.image,
@@ -107,6 +91,20 @@ export class Option1 {
               description: recipe.description,
               ingredients: recipe.ingredients,
             });
+          } else {
+            for (let j = 0; j < ingredients.length; j++) {
+              const ingredient = ingredients[j].ingredient.toLowerCase();
+              if (ingredient.includes(inputValue)) {
+                searchResults.push({
+                  name: recipe.name,
+                  image: recipe.image,
+                  time: recipe.time,
+                  description: recipe.description,
+                  ingredients: recipe.ingredients,
+                });
+                break;
+              }
+            }
           }
         }
 
@@ -115,7 +113,7 @@ export class Option1 {
           numbersRecipe.textContent = 0;
           ul.style.display = "none";
           errorDiv.style.display = "block";
-          errorDiv.textContent = `Aucune recette ne contient '${inputValue}'. Vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+          errorDiv.textContent = `Aucune recette ne contient '${inputValue}'. Vous pouvez chercher par nom ou ingrédient.`;
         } else {
           errorDiv.style.display = "none";
           callback(searchResults, inputValue.length);
