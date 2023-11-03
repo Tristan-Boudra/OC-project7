@@ -247,10 +247,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function capitalizeFirstLetter(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }
-
   function createIngredientsDropdown() {
     const allIngredients = option1.getUniqueIngredients();
 
@@ -439,6 +435,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function capitalizeFirstLetter(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }
+
   let allTags = [];
 
   function addTags(items) {
@@ -498,5 +498,5 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
-  init();
-});
+  init();  
+})
