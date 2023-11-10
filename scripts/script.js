@@ -10,15 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const searchInput = document.getElementById("search-input");
   searchInput.addEventListener("input", function () {
-    const inputValue = searchInput.value;
-
-    option1.valueInput(function (results) {
+    option1.handleInputAndTags(function (results) {
       displayRecipes(results);
     });
-
-    if (inputValue === "") {
-      displayRecipes(recipes);
-    }
   });
 
   function countRecipes(count) {
@@ -217,6 +211,13 @@ document.addEventListener("DOMContentLoaded", function () {
     clearButton.addEventListener("click", function () {
       searchInput.value = "";
       clearButton.style.display = "none";
+      if(searchInput.value === "" && option1.getSelectedTags().length === 0) {
+        displayRecipes(recipes);
+      } else if(searchInput.value === "" && option1.getSelectedTags().length > 0) {
+        option1.valueTags(function (results) {
+          displayRecipes(results);
+        });
+      }
     });
   }
 
@@ -256,8 +257,13 @@ document.addEventListener("DOMContentLoaded", function () {
       var li = document.createElement("li");
 
       li.addEventListener("click", function () {
-        addTags(ingredient, li);
-      });
+        option1.addTags(ingredient, function (results) {
+          displayRecipes(results);
+        });
+        option1.valueTags(function (results) {
+          displayRecipes(results);
+        });
+      });      
 
       li.classList.add(
         "block",
@@ -298,15 +304,17 @@ document.addEventListener("DOMContentLoaded", function () {
       allIngredients.forEach((ingredient) => {
         const ingredientElement = document.getElementById(ingredient);
         ingredientElement.style.display = "block";
-      })
+      });
     });
 
-    const clearButton = document.getElementById("clear-button-dropdown-ingredients");
+    const clearButton = document.getElementById(
+      "clear-button-dropdown-ingredients"
+    );
     clearButton.addEventListener("click", function () {
       allIngredients.forEach((ingredient) => {
         const ingredientElement = document.getElementById(ingredient);
         ingredientElement.style.display = "block";
-      })
+      });
     });
   }
 
@@ -318,7 +326,12 @@ document.addEventListener("DOMContentLoaded", function () {
       var li = document.createElement("li");
 
       li.addEventListener("click", function () {
-        addTags(appareil, li);
+        option1.addTags(appareil, function (results) {
+          displayRecipes(results);
+        });
+        option1.valueTags(function (results) {
+          displayRecipes(results);
+        });
       });
 
       li.classList.add(
@@ -360,15 +373,17 @@ document.addEventListener("DOMContentLoaded", function () {
       allAppareils.forEach((appareil) => {
         const appareilElement = document.getElementById(appareil);
         appareilElement.style.display = "block";
-      })
+      });
     });
 
-    const clearButton = document.getElementById("clear-button-dropdown-appareils");
+    const clearButton = document.getElementById(
+      "clear-button-dropdown-appareils"
+    );
     clearButton.addEventListener("click", function () {
       allAppareils.forEach((appareil) => {
         const appareilElement = document.getElementById(appareil);
         appareilElement.style.display = "block";
-      })
+      });
     });
   }
 
@@ -380,8 +395,13 @@ document.addEventListener("DOMContentLoaded", function () {
       var li = document.createElement("li");
 
       li.addEventListener("click", function () {
-        addTags(ustensile, li);
-      });
+        option1.addTags(ustensile, function (results) {
+          displayRecipes(results);
+        });
+        option1.valueTags(function (results) {
+          displayRecipes(results);
+        });
+      }); 
 
       li.classList.add(
         "block",
@@ -423,55 +443,22 @@ document.addEventListener("DOMContentLoaded", function () {
       allUstensiles.forEach((ustensile) => {
         const ustensilElement = document.getElementById(ustensile);
         ustensilElement.style.display = "block";
-      })
+      });
     });
 
-    const clearButton = document.getElementById("clear-button-dropdown-ustensiles");
+    const clearButton = document.getElementById(
+      "clear-button-dropdown-ustensiles"
+    );
     clearButton.addEventListener("click", function () {
       allUstensiles.forEach((ustensile) => {
         const ustensilElement = document.getElementById(ustensile);
         ustensilElement.style.display = "block";
-      })
+      });
     });
   }
 
   function capitalizeFirstLetter(word) {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }
-
-  let allTags = [];
-
-  function addTags(items) {
-    if (!allTags.includes(items)) {
-      const li = document.createElement("li");
-      li.className =
-        "flex items-center bg-[#FFD15B] w-max px-4 py-2 rounded-md";
-
-      const paragraph = document.createElement("p");
-      paragraph.textContent = capitalizeFirstLetter(items);
-      allTags.push(items);
-
-      const button = document.createElement("button");
-
-      const icon = document.createElement("i");
-      icon.className = "fas fa-times ml-5";
-      icon.addEventListener("click", function () {
-        // On enlève le tags du tableau allTags
-        const index = allTags.indexOf(items);
-        if (index !== -1) {
-          allTags.splice(index, 1);
-        }
-        li.remove();
-      });
-
-      button.appendChild(icon);
-
-      li.appendChild(paragraph);
-      li.appendChild(button);
-
-      const container = document.getElementById("ul-list-tags");
-      container.appendChild(li);
-    }
   }
 
   function init() {
@@ -497,6 +484,5 @@ document.addEventListener("DOMContentLoaded", function () {
       "dropdown-chevron-ustensiles"
     );
   }
-
-  init();  
-})
+  init();
+});
