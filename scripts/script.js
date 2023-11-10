@@ -1,6 +1,10 @@
 import recipes from "../data/recipes.js";
+import { Option2 } from "./option2.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+
+  const option2 = new Option2();
+
   // Suppression du texte de la barre de recherche dans le header
   const searchInput = document.getElementById("search-input");
   const clearButton = document.getElementById("clear-button");
