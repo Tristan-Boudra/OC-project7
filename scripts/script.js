@@ -252,7 +252,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function createIngredientsDropdown() {
 		const allIngredients = option2.getUniqueIngredients();
-		const listIngredientsDiv = document.getElementById("list-ingredients");
 		const ul = document.getElementById("ul-dropdown-ingredients");
 		const input = document.getElementById("search-input-dropdown-ingredients");
 		const clearButton = document.getElementById("clear-button-dropdown-ingredients");
@@ -267,25 +266,35 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	
 		function handleIngredientClick(ingredient) {
-			console.log(ingredient);
 			displayRecipesAndTags(ingredient);
 		}
 	
 		function updateVisibility(inputValue) {
-			allIngredients.forEach((ingredient) => {
-				const ingredientElement = document.getElementById(ingredient);
-				if (ingredientElement) {
-					const includesInput = ingredient.includes(inputValue);
-					ingredientElement.style.display = includesInput ? "block" : "none";
+			// Réinitialise la liste des ingrédients à chaque appel
+			ul.innerHTML = "";
 	
-					// Supprimer les anciens écouteurs d'événements pour éviter les doublons
-					ingredientElement.removeEventListener("click", () => {});
-					
-					if (includesInput) {
-						ingredientElement.addEventListener("click", function () {
-							handleIngredientClick(ingredient);
-						});
-					}
+			allIngredients.forEach((ingredient) => {
+				const includesInput = ingredient.includes(inputValue);
+	
+				if (includesInput) {
+					const li = document.createElement("li");
+					li.classList.add(
+						"block",
+						"px-4",
+						"py-2",
+						"text-sm",
+						"text-gray-700",
+						"hover:bg-[#FFD15B]"
+					);
+					li.setAttribute("role", "menuitem");
+					li.setAttribute("id", ingredient);
+					li.textContent = capitalizeFirstLetter(ingredient);
+	
+					li.addEventListener("click", function () {
+						handleIngredientClick(ingredient);
+					});
+	
+					ul.appendChild(li);
 				}
 			});
 		}
@@ -306,41 +315,20 @@ document.addEventListener("DOMContentLoaded", function () {
 		input.addEventListener("blur", function () {
 			input.value = "";
 			clearButton.style.display = "none";
-			allIngredients.forEach((ingredient) => {
-				const ingredientElement = document.getElementById(ingredient);
-				ingredientElement.style.display = "block";
-			});
+			updateVisibility("");  // Mettez à jour la visibilité après avoir vidé l'input
 		});
 	
 		clearButton.addEventListener("click", function () {
-			allIngredients.forEach((ingredient) => {
-				const ingredientElement = document.getElementById(ingredient);
-				ingredientElement.style.display = "block";
-			});
+			updateVisibility("");
 		});
 	
-		allIngredients.forEach((ingredient) => {
-			const li = document.createElement("li");
-			li.classList.add(
-				"block",
-				"px-4",
-				"py-2",
-				"text-sm",
-				"text-gray-700",
-				"hover:bg-[#FFD15B]"
-			);
-			li.setAttribute("role", "menuitem");
-			li.setAttribute("id", ingredient);
-			li.textContent = capitalizeFirstLetter(ingredient);
-	
-			ul.appendChild(li);
-			listIngredientsDiv.appendChild(ul);
-		});
+		// Initialiser la liste des ingrédients
+		updateVisibility("");
 	}
+	
 	
 	function createAppareilsDropdown() {
 		const allAppareils = option2.getUniqueAppareils();
-		const listIngredientsDiv = document.getElementById("list-appareils");
 		const ul = document.getElementById("ul-dropdown-appareils");
 		const input = document.getElementById("search-input-dropdown-appareils");
 		const clearButton = document.getElementById("clear-button-dropdown-appareils");
@@ -360,11 +348,31 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	
 		function updateVisibility(inputValue) {
+			// Réinitialiser la liste des appareils à chaque appel
+			ul.innerHTML = "";
+	
 			allAppareils.forEach((appareil) => {
-				const appareilElement = document.getElementById(appareil);
-				if (appareilElement) {
-					const includesInput = appareil.includes(inputValue);
-					appareilElement.style.display = includesInput ? "block" : "none";
+				const includesInput = appareil.includes(inputValue);
+	
+				if (includesInput) {
+					const li = document.createElement("li");
+					li.classList.add(
+						"block",
+						"px-4",
+						"py-2",
+						"text-sm",
+						"text-gray-700",
+						"hover:bg-[#FFD15B]"
+					);
+					li.setAttribute("role", "menuitem");
+					li.setAttribute("id", appareil);
+					li.textContent = capitalizeFirstLetter(appareil);
+	
+					li.addEventListener("click", function () {
+						handleAppareilClick(appareil);
+					});
+	
+					ul.appendChild(li);
 				}
 			});
 		}
@@ -385,41 +393,19 @@ document.addEventListener("DOMContentLoaded", function () {
 		input.addEventListener("blur", function () {
 			input.value = "";
 			clearButton.style.display = "none";
-			allAppareils.forEach((appareil) => {
-				const appareilElement = document.getElementById(appareil);
-				appareilElement.style.display = "block";
-			});
+			updateVisibility("");
 		});
 	
 		clearButton.addEventListener("click", function () {
-			allAppareils.forEach((appareil) => {
-				const appareilElement = document.getElementById(appareil);
-				appareilElement.style.display = "block";
-			});
+			updateVisibility("");
 		});
 	
-		allAppareils.forEach((appareil) => {
-			const li = document.createElement("li");
-			li.classList.add(
-				"block",
-				"px-4",
-				"py-2",
-				"text-sm",
-				"text-gray-700",
-				"hover:bg-[#FFD15B]"
-			);
-			li.setAttribute("role", "menuitem");
-			li.setAttribute("id", appareil);
-			li.textContent = capitalizeFirstLetter(appareil);
-	
-			ul.appendChild(li);
-			listIngredientsDiv.appendChild(ul);
-		});
-	}	
-
+		// Initialiser la liste des appareils
+		updateVisibility("");
+	}
+		
 	function createUstensilesDropdown() {
 		const allUstensiles = option2.getUniqueUstensiles();
-		const listIngredientsDiv = document.getElementById("list-ustensiles");
 		const ul = document.getElementById("ul-dropdown-ustensiles");
 		const input = document.getElementById("search-input-dropdown-ustensiles");
 		const clearButton = document.getElementById("clear-button-dropdown-ustensiles");
@@ -439,20 +425,31 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	
 		function updateVisibility(inputValue) {
-			allUstensiles.forEach((ustensile) => {
-				const ustensilElement = document.getElementById(ustensile);
-				if (ustensilElement) {
-					const includesInput = ustensile.includes(inputValue);
-					ustensilElement.style.display = includesInput ? "block" : "none";
+			// Réinitialiser la liste des ustensiles à chaque appel
+			ul.innerHTML = "";
 	
-					// Supprimer les anciens écouteurs d'événements pour éviter les doublons
-					ustensilElement.removeEventListener("click", () => {});
-					
-					if (includesInput) {
-						ustensilElement.addEventListener("click", function () {
-							handleUstensileClick(ustensile);
-						});
-					}
+			allUstensiles.forEach((ustensile) => {
+				const includesInput = ustensile.includes(inputValue);
+	
+				if (includesInput) {
+					const li = document.createElement("li");
+					li.classList.add(
+						"block",
+						"px-4",
+						"py-2",
+						"text-sm",
+						"text-gray-700",
+						"hover:bg-[#FFD15B]"
+					);
+					li.setAttribute("role", "menuitem");
+					li.setAttribute("id", ustensile);
+					li.textContent = capitalizeFirstLetter(ustensile);
+	
+					li.addEventListener("click", function () {
+						handleUstensileClick(ustensile);
+					});
+	
+					ul.appendChild(li);
 				}
 			});
 		}
@@ -473,36 +470,15 @@ document.addEventListener("DOMContentLoaded", function () {
 		input.addEventListener("blur", function () {
 			input.value = "";
 			clearButton.style.display = "none";
-			allUstensiles.forEach((ustensile) => {
-				const ustensileElement = document.getElementById(ustensile);
-				ustensileElement.style.display = "block";
-			});
+			updateVisibility("");
 		});
 	
 		clearButton.addEventListener("click", function () {
-			allUstensiles.forEach((ustensile) => {
-				const ustensileElement = document.getElementById(ustensile);
-				ustensileElement.style.display = "block";
-			});
+			updateVisibility("");
 		});
 	
-		allUstensiles.forEach((ustensile) => {
-			const li = document.createElement("li");
-			li.classList.add(
-				"block",
-				"px-4",
-				"py-2",
-				"text-sm",
-				"text-gray-700",
-				"hover:bg-[#FFD15B]"
-			);
-			li.setAttribute("role", "menuitem");
-			li.setAttribute("id", ustensile);
-			li.textContent = capitalizeFirstLetter(ustensile);
-	
-			ul.appendChild(li);
-			listIngredientsDiv.appendChild(ul);
-		});
+		// Initialiser la liste des ustensiles
+		updateVisibility("");
 	}
 	
 
