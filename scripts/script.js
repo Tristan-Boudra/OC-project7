@@ -212,7 +212,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			searchInput.value = "";
 			clearButton.style.display = "none";
 			if(searchInput.value === "" && option2.getSelectedTags().length === 0) {
-				displayRecipes(recipes);
+				option2.updateUI(recipes, searchInput, function (results) {
+					displayRecipes(results);
+				});
 			} else if(searchInput.value === "" && option2.getSelectedTags().length > 0) {
 				option2.valueTags(function (results) {
 					displayRecipes(results);
@@ -250,21 +252,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function createIngredientsDropdown() {
 		const allIngredients = option2.getUniqueIngredients();
-
+		const listIngredientsDiv = document.getElementById("list-ingredients");
+		const ul = document.getElementById("ul-dropdown-ingredients");
+		const input = document.getElementById("search-input-dropdown-ingredients");
+		const clearButton = document.getElementById("clear-button-dropdown-ingredients");
+	
+		function displayRecipesAndTags(ingredient) {
+			option2.addTags(ingredient, function (results) {
+				displayRecipes(results);
+			});
+			option2.valueTags(function (results) {
+				displayRecipes(results);
+			});
+		}
+	
+		function handleIngredientClick(ingredient) {
+			console.log(ingredient);
+			displayRecipesAndTags(ingredient);
+		}
+	
+		function updateVisibility(inputValue) {
+			allIngredients.forEach((ingredient) => {
+				const ingredientElement = document.getElementById(ingredient);
+				if (ingredientElement) {
+					const includesInput = ingredient.includes(inputValue);
+					ingredientElement.style.display = includesInput ? "block" : "none";
+	
+					// Supprimer les anciens écouteurs d'événements pour éviter les doublons
+					ingredientElement.removeEventListener("click", () => {});
+					
+					if (includesInput) {
+						ingredientElement.addEventListener("click", function () {
+							handleIngredientClick(ingredient);
+						});
+					}
+				}
+			});
+		}
+	
+		ul.addEventListener("click", function (event) {
+			const target = event.target;
+			if (target.tagName === "LI") {
+				const ingredient = target.id;
+				handleIngredientClick(ingredient);
+			}
+		});
+	
+		input.addEventListener("input", function () {
+			const inputValue = input.value.toLowerCase();
+			updateVisibility(inputValue);
+		});
+	
+		input.addEventListener("blur", function () {
+			input.value = "";
+			clearButton.style.display = "none";
+			allIngredients.forEach((ingredient) => {
+				const ingredientElement = document.getElementById(ingredient);
+				ingredientElement.style.display = "block";
+			});
+		});
+	
+		clearButton.addEventListener("click", function () {
+			allIngredients.forEach((ingredient) => {
+				const ingredientElement = document.getElementById(ingredient);
+				ingredientElement.style.display = "block";
+			});
+		});
+	
 		allIngredients.forEach((ingredient) => {
-			const listIngredientsDiv = document.getElementById("list-ingredients");
-			const ul = document.getElementById("ul-dropdown-ingredients");
-			var li = document.createElement("li");
-
-			li.addEventListener("click", function () {
-				option2.addTags(ingredient, function (results) {
-					displayRecipes(results);
-				});
-				option2.valueTags(function (results) {
-					displayRecipes(results);
-				});
-			});      
-
+			const li = document.createElement("li");
 			li.classList.add(
 				"block",
 				"px-4",
@@ -275,65 +331,75 @@ document.addEventListener("DOMContentLoaded", function () {
 			);
 			li.setAttribute("role", "menuitem");
 			li.setAttribute("id", ingredient);
-
 			li.textContent = capitalizeFirstLetter(ingredient);
-
+	
 			ul.appendChild(li);
 			listIngredientsDiv.appendChild(ul);
 		});
-
-		const input = document.getElementById("search-input-dropdown-ingredients");
-		input.addEventListener("input", function () {
-			const inputValue = input.value.toLowerCase();
-			for (const ingredient of allIngredients) {
-				const ingredientElement = document.getElementById(ingredient);
-
-				if (ingredientElement) {
-					if (ingredient.includes(inputValue)) {
-						ingredientElement.style.display = "block";
-					} else {
-						ingredientElement.style.display = "none";
-					}
+	}
+	
+	function createAppareilsDropdown() {
+		const allAppareils = option2.getUniqueAppareils();
+		const listIngredientsDiv = document.getElementById("list-appareils");
+		const ul = document.getElementById("ul-dropdown-appareils");
+		const input = document.getElementById("search-input-dropdown-appareils");
+		const clearButton = document.getElementById("clear-button-dropdown-appareils");
+	
+		function displayRecipesAndTags(appareil) {
+			option2.addTags(appareil, function (results) {
+				displayRecipes(results);
+			});
+			option2.valueTags(function (results) {
+				displayRecipes(results);
+			});
+		}
+	
+		function handleAppareilClick(appareil) {
+			console.log(appareil);
+			displayRecipesAndTags(appareil);
+		}
+	
+		function updateVisibility(inputValue) {
+			allAppareils.forEach((appareil) => {
+				const appareilElement = document.getElementById(appareil);
+				if (appareilElement) {
+					const includesInput = appareil.includes(inputValue);
+					appareilElement.style.display = includesInput ? "block" : "none";
 				}
+			});
+		}
+	
+		ul.addEventListener("click", function (event) {
+			const target = event.target;
+			if (target.tagName === "LI") {
+				const appareil = target.id;
+				handleAppareilClick(appareil);
 			}
 		});
-
+	
+		input.addEventListener("input", function () {
+			const inputValue = input.value.trim().toLowerCase();
+			updateVisibility(inputValue);
+		});
+	
 		input.addEventListener("blur", function () {
 			input.value = "";
 			clearButton.style.display = "none";
-			allIngredients.forEach((ingredient) => {
-				const ingredientElement = document.getElementById(ingredient);
-				ingredientElement.style.display = "block";
+			allAppareils.forEach((appareil) => {
+				const appareilElement = document.getElementById(appareil);
+				appareilElement.style.display = "block";
 			});
 		});
-
-		const clearButton = document.getElementById(
-			"clear-button-dropdown-ingredients"
-		);
+	
 		clearButton.addEventListener("click", function () {
-			allIngredients.forEach((ingredient) => {
-				const ingredientElement = document.getElementById(ingredient);
-				ingredientElement.style.display = "block";
+			allAppareils.forEach((appareil) => {
+				const appareilElement = document.getElementById(appareil);
+				appareilElement.style.display = "block";
 			});
 		});
-	}
-
-	function createAppareilsDropdown() {
-		const allAppareils = option2.getUniqueAppareils();
+	
 		allAppareils.forEach((appareil) => {
-			const listIngredientsDiv = document.getElementById("list-appareils");
-			const ul = document.getElementById("ul-dropdown-appareils");
-			var li = document.createElement("li");
-
-			li.addEventListener("click", function () {
-				option2.addTags(appareil, function (results) {
-					displayRecipes(results);
-				});
-				option2.valueTags(function (results) {
-					displayRecipes(results);
-				});
-			});
-
+			const li = document.createElement("li");
 			li.classList.add(
 				"block",
 				"px-4",
@@ -344,65 +410,84 @@ document.addEventListener("DOMContentLoaded", function () {
 			);
 			li.setAttribute("role", "menuitem");
 			li.setAttribute("id", appareil);
-
 			li.textContent = capitalizeFirstLetter(appareil);
-
+	
 			ul.appendChild(li);
 			listIngredientsDiv.appendChild(ul);
 		});
-
-		const input = document.getElementById("search-input-dropdown-appareils");
-		input.addEventListener("input", function () {
-			const inputValue = input.value;
-
-			for (const appareil of allAppareils) {
-				const appareilElement = document.getElementById(appareil);
-				if (appareilElement) {
-					if (appareil.includes(inputValue)) {
-						appareilElement.style.display = "block";
-					} else {
-						appareilElement.style.display = "none";
-					}
-				}
-			}
-		});
-
-		input.addEventListener("blur", function () {
-			input.value = "";
-			clearButton.style.display = "none";
-			allAppareils.forEach((appareil) => {
-				const appareilElement = document.getElementById(appareil);
-				appareilElement.style.display = "block";
-			});
-		});
-
-		const clearButton = document.getElementById(
-			"clear-button-dropdown-appareils"
-		);
-		clearButton.addEventListener("click", function () {
-			allAppareils.forEach((appareil) => {
-				const appareilElement = document.getElementById(appareil);
-				appareilElement.style.display = "block";
-			});
-		});
-	}
+	}	
 
 	function createUstensilesDropdown() {
 		const allUstensiles = option2.getUniqueUstensiles();
+		const listIngredientsDiv = document.getElementById("list-ustensiles");
+		const ul = document.getElementById("ul-dropdown-ustensiles");
+		const input = document.getElementById("search-input-dropdown-ustensiles");
+		const clearButton = document.getElementById("clear-button-dropdown-ustensiles");
+	
+		function displayRecipesAndTags(ustensile) {
+			option2.addTags(ustensile, function (results) {
+				displayRecipes(results);
+			});
+			option2.valueTags(function (results) {
+				displayRecipes(results);
+			});
+		}
+	
+		function handleUstensileClick(ustensile) {
+			console.log(ustensile);
+			displayRecipesAndTags(ustensile);
+		}
+	
+		function updateVisibility(inputValue) {
+			allUstensiles.forEach((ustensile) => {
+				const ustensilElement = document.getElementById(ustensile);
+				if (ustensilElement) {
+					const includesInput = ustensile.includes(inputValue);
+					ustensilElement.style.display = includesInput ? "block" : "none";
+	
+					// Supprimer les anciens écouteurs d'événements pour éviter les doublons
+					ustensilElement.removeEventListener("click", () => {});
+					
+					if (includesInput) {
+						ustensilElement.addEventListener("click", function () {
+							handleUstensileClick(ustensile);
+						});
+					}
+				}
+			});
+		}
+	
+		ul.addEventListener("click", function (event) {
+			const target = event.target;
+			if (target.tagName === "LI") {
+				const ustensile = target.id;
+				handleUstensileClick(ustensile);
+			}
+		});
+	
+		input.addEventListener("input", function () {
+			const inputValue = input.value.toLowerCase();
+			updateVisibility(inputValue);
+		});
+	
+		input.addEventListener("blur", function () {
+			input.value = "";
+			clearButton.style.display = "none";
+			allUstensiles.forEach((ustensile) => {
+				const ustensileElement = document.getElementById(ustensile);
+				ustensileElement.style.display = "block";
+			});
+		});
+	
+		clearButton.addEventListener("click", function () {
+			allUstensiles.forEach((ustensile) => {
+				const ustensileElement = document.getElementById(ustensile);
+				ustensileElement.style.display = "block";
+			});
+		});
+	
 		allUstensiles.forEach((ustensile) => {
-			const listIngredientsDiv = document.getElementById("list-ustensiles");
-			const ul = document.getElementById("ul-dropdown-ustensiles");
-			var li = document.createElement("li");
-
-			li.addEventListener("click", function () {
-				option2.addTags(ustensile, function (results) {
-					displayRecipes(results);
-				});
-				option2.valueTags(function (results) {
-					displayRecipes(results);
-				});
-			}); 
-
+			const li = document.createElement("li");
 			li.classList.add(
 				"block",
 				"px-4",
@@ -413,49 +498,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			);
 			li.setAttribute("role", "menuitem");
 			li.setAttribute("id", ustensile);
-
 			li.textContent = capitalizeFirstLetter(ustensile);
-
+	
 			ul.appendChild(li);
 			listIngredientsDiv.appendChild(ul);
 		});
-
-		const input = document.getElementById("search-input-dropdown-ustensiles");
-		input.addEventListener("input", function () {
-			const inputValue = input.value.toLowerCase();
-
-			for (const ustensile of allUstensiles) {
-				const ustensilElement = document.getElementById(ustensile);
-
-				if (ustensilElement) {
-					if (ustensile.includes(inputValue)) {
-						ustensilElement.style.display = "block";
-					} else {
-						ustensilElement.style.display = "none";
-					}
-				}
-			}
-		});
-
-		input.addEventListener("blur", function () {
-			input.value = "";
-			clearButton.style.display = "none";
-			allUstensiles.forEach((ustensile) => {
-				const ustensilElement = document.getElementById(ustensile);
-				ustensilElement.style.display = "block";
-			});
-		});
-
-		const clearButton = document.getElementById(
-			"clear-button-dropdown-ustensiles"
-		);
-		clearButton.addEventListener("click", function () {
-			allUstensiles.forEach((ustensile) => {
-				const ustensilElement = document.getElementById(ustensile);
-				ustensilElement.style.display = "block";
-			});
-		});
 	}
+	
 
 	function capitalizeFirstLetter(word) {
 		return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
