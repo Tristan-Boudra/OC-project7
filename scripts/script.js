@@ -211,11 +211,14 @@ document.addEventListener("DOMContentLoaded", function () {
 		clearButton.addEventListener("click", function () {
 			searchInput.value = "";
 			clearButton.style.display = "none";
-			if(searchInput.value === "" && option1.getSelectedTags().length === 0) {
+			if (searchInput.value === "" && option1.getSelectedTags().length === 0) {
 				option1.updateUI(recipes, searchInput, function (results) {
 					displayRecipes(results);
 				});
-			} else if(searchInput.value === "" && option1.getSelectedTags().length > 0) {
+			} else if (
+				searchInput.value === "" &&
+        option1.getSelectedTags().length > 0
+			) {
 				option1.valueTags(function (results) {
 					displayRecipes(results);
 				});
@@ -252,11 +255,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function createIngredientsDropdown() {
 		const allIngredients = option1.getUniqueIngredients();
-		const listIngredientsDiv = document.getElementById("list-ingredients");
 		const ul = document.getElementById("ul-dropdown-ingredients");
 		const input = document.getElementById("search-input-dropdown-ingredients");
-		const clearButton = document.getElementById("clear-button-dropdown-ingredients");
-	
+		const clearButton = document.getElementById(
+			"clear-button-dropdown-ingredients"
+		);
+
 		function displayRecipesAndTags(ingredient) {
 			option1.addTags(ingredient, function (results) {
 				displayRecipes(results);
@@ -265,31 +269,46 @@ document.addEventListener("DOMContentLoaded", function () {
 				displayRecipes(results);
 			});
 		}
-	
+
 		function handleIngredientClick(ingredient) {
-			console.log(ingredient);
 			displayRecipesAndTags(ingredient);
 		}
-	
-		function updateVisibility(inputValue) {
+
+		function updateVisibilityIngredient(inputValue) {
+			// Réinitialise la liste des ingrédients à chaque appel
+			ul.innerHTML = "";
+
 			allIngredients.forEach((ingredient) => {
-				const ingredientElement = document.getElementById(ingredient);
-				if (ingredientElement) {
-					const includesInput = ingredient.includes(inputValue);
-					ingredientElement.style.display = includesInput ? "block" : "none";
-	
-					// Supprimer les anciens écouteurs d'événements pour éviter les doublons
-					ingredientElement.removeEventListener("click", () => {});
-					
-					if (includesInput) {
-						ingredientElement.addEventListener("click", function () {
-							handleIngredientClick(ingredient);
-						});
-					}
+				const includesInput = ingredient.includes(inputValue);
+
+				if (includesInput) {
+					const li = document.createElement("li");
+					li.classList.add(
+						"block",
+						"px-4",
+						"py-2",
+						"text-sm",
+						"text-gray-700",
+						"hover:bg-[#FFD15B]"
+					);
+					li.setAttribute("role", "menuitem");
+					li.setAttribute("id", ingredient);
+					li.textContent = capitalizeFirstLetter(ingredient);
+
+					li.addEventListener("click", function () {
+						handleIngredientClick(ingredient);
+
+						input.value = "";
+						clearButton.style.display = "none";
+					});
+
+					li.focus();
+					ul.focus();
+					ul.appendChild(li);
 				}
 			});
 		}
-	
+
 		ul.addEventListener("click", function (event) {
 			const target = event.target;
 			if (target.tagName === "LI") {
@@ -297,55 +316,27 @@ document.addEventListener("DOMContentLoaded", function () {
 				handleIngredientClick(ingredient);
 			}
 		});
-	
+
 		input.addEventListener("input", function () {
 			const inputValue = input.value.toLowerCase();
-			updateVisibility(inputValue);
+			updateVisibilityIngredient(inputValue);
 		});
-	
-		input.addEventListener("blur", function () {
-			input.value = "";
-			clearButton.style.display = "none";
-			allIngredients.forEach((ingredient) => {
-				const ingredientElement = document.getElementById(ingredient);
-				ingredientElement.style.display = "block";
-			});
-		});
-	
+
 		clearButton.addEventListener("click", function () {
-			allIngredients.forEach((ingredient) => {
-				const ingredientElement = document.getElementById(ingredient);
-				ingredientElement.style.display = "block";
-			});
+			updateVisibilityIngredient("");
 		});
-	
-		allIngredients.forEach((ingredient) => {
-			const li = document.createElement("li");
-			li.classList.add(
-				"block",
-				"px-4",
-				"py-2",
-				"text-sm",
-				"text-gray-700",
-				"hover:bg-[#FFD15B]"
-			);
-			li.setAttribute("role", "menuitem");
-			li.setAttribute("id", ingredient);
-			li.textContent = capitalizeFirstLetter(ingredient);
-	
-			ul.appendChild(li);
-			listIngredientsDiv.appendChild(ul);
-		});
+
+		updateVisibilityIngredient("");
 	}
-	
 
 	function createAppareilsDropdown() {
 		const allAppareils = option1.getUniqueAppareils();
-		const listIngredientsDiv = document.getElementById("list-appareils");
 		const ul = document.getElementById("ul-dropdown-appareils");
 		const input = document.getElementById("search-input-dropdown-appareils");
-		const clearButton = document.getElementById("clear-button-dropdown-appareils");
-	
+		const clearButton = document.getElementById(
+			"clear-button-dropdown-appareils"
+		);
+
 		function displayRecipesAndTags(appareil) {
 			option1.addTags(appareil, function (results) {
 				displayRecipes(results);
@@ -354,22 +345,44 @@ document.addEventListener("DOMContentLoaded", function () {
 				displayRecipes(results);
 			});
 		}
-	
+
 		function handleAppareilClick(appareil) {
-			console.log(appareil);
 			displayRecipesAndTags(appareil);
 		}
-	
-		function updateVisibility(inputValue) {
+
+		function updateVisibilityAppareil(inputValue) {
+			// Réinitialise la liste des appareils à chaque appel
+			ul.innerHTML = "";
+
 			allAppareils.forEach((appareil) => {
-				const appareilElement = document.getElementById(appareil);
-				if (appareilElement) {
-					const includesInput = appareil.includes(inputValue);
-					appareilElement.style.display = includesInput ? "block" : "none";
+				const includesInput = appareil.includes(inputValue);
+
+				if (includesInput) {
+					const li = document.createElement("li");
+					li.classList.add(
+						"block",
+						"px-4",
+						"py-2",
+						"text-sm",
+						"text-gray-700",
+						"hover:bg-[#FFD15B]"
+					);
+					li.setAttribute("role", "menuitem");
+					li.setAttribute("id", appareil);
+					li.textContent = capitalizeFirstLetter(appareil);
+
+					li.addEventListener("click", function () {
+						handleAppareilClick(appareil);
+
+						input.value = "";
+						clearButton.style.display = "none";
+					});
+
+					ul.appendChild(li);
 				}
 			});
 		}
-	
+
 		ul.addEventListener("click", function (event) {
 			const target = event.target;
 			if (target.tagName === "LI") {
@@ -377,54 +390,27 @@ document.addEventListener("DOMContentLoaded", function () {
 				handleAppareilClick(appareil);
 			}
 		});
-	
+
 		input.addEventListener("input", function () {
 			const inputValue = input.value.trim().toLowerCase();
-			updateVisibility(inputValue);
+			updateVisibilityAppareil(inputValue);
 		});
-	
-		input.addEventListener("blur", function () {
-			input.value = "";
-			clearButton.style.display = "none";
-			allAppareils.forEach((appareil) => {
-				const appareilElement = document.getElementById(appareil);
-				appareilElement.style.display = "block";
-			});
-		});
-	
+
 		clearButton.addEventListener("click", function () {
-			allAppareils.forEach((appareil) => {
-				const appareilElement = document.getElementById(appareil);
-				appareilElement.style.display = "block";
-			});
+			updateVisibilityAppareil("");
 		});
-	
-		allAppareils.forEach((appareil) => {
-			const li = document.createElement("li");
-			li.classList.add(
-				"block",
-				"px-4",
-				"py-2",
-				"text-sm",
-				"text-gray-700",
-				"hover:bg-[#FFD15B]"
-			);
-			li.setAttribute("role", "menuitem");
-			li.setAttribute("id", appareil);
-			li.textContent = capitalizeFirstLetter(appareil);
-	
-			ul.appendChild(li);
-			listIngredientsDiv.appendChild(ul);
-		});
+
+		updateVisibilityAppareil("");
 	}
-	
+
 	function createUstensilesDropdown() {
 		const allUstensiles = option1.getUniqueUstensiles();
-		const listIngredientsDiv = document.getElementById("list-ustensiles");
 		const ul = document.getElementById("ul-dropdown-ustensiles");
 		const input = document.getElementById("search-input-dropdown-ustensiles");
-		const clearButton = document.getElementById("clear-button-dropdown-ustensiles");
-	
+		const clearButton = document.getElementById(
+			"clear-button-dropdown-ustensiles"
+		);
+
 		function displayRecipesAndTags(ustensile) {
 			option1.addTags(ustensile, function (results) {
 				displayRecipes(results);
@@ -433,31 +419,44 @@ document.addEventListener("DOMContentLoaded", function () {
 				displayRecipes(results);
 			});
 		}
-	
+
 		function handleUstensileClick(ustensile) {
-			console.log(ustensile);
 			displayRecipesAndTags(ustensile);
 		}
-	
-		function updateVisibility(inputValue) {
+
+		function updateVisibilityUstensile(inputValue) {
+			// Réinitialise la liste des ustensiles à chaque appel
+			ul.innerHTML = "";
+
 			allUstensiles.forEach((ustensile) => {
-				const ustensilElement = document.getElementById(ustensile);
-				if (ustensilElement) {
-					const includesInput = ustensile.includes(inputValue);
-					ustensilElement.style.display = includesInput ? "block" : "none";
-	
-					// Supprimer les anciens écouteurs d'événements pour éviter les doublons
-					ustensilElement.removeEventListener("click", () => {});
-					
-					if (includesInput) {
-						ustensilElement.addEventListener("click", function () {
-							handleUstensileClick(ustensile);
-						});
-					}
+				const includesInput = ustensile.includes(inputValue);
+
+				if (includesInput) {
+					const li = document.createElement("li");
+					li.classList.add(
+						"block",
+						"px-4",
+						"py-2",
+						"text-sm",
+						"text-gray-700",
+						"hover:bg-[#FFD15B]"
+					);
+					li.setAttribute("role", "menuitem");
+					li.setAttribute("id", ustensile);
+					li.textContent = capitalizeFirstLetter(ustensile);
+
+					li.addEventListener("click", function () {
+						handleUstensileClick(ustensile);
+
+						input.value = "";
+						clearButton.style.display = "none";
+					});
+
+					ul.appendChild(li);
 				}
 			});
 		}
-	
+
 		ul.addEventListener("click", function (event) {
 			const target = event.target;
 			if (target.tagName === "LI") {
@@ -465,45 +464,17 @@ document.addEventListener("DOMContentLoaded", function () {
 				handleUstensileClick(ustensile);
 			}
 		});
-	
+
 		input.addEventListener("input", function () {
 			const inputValue = input.value.toLowerCase();
-			updateVisibility(inputValue);
+			updateVisibilityUstensile(inputValue);
 		});
-	
-		input.addEventListener("blur", function () {
-			input.value = "";
-			clearButton.style.display = "none";
-			allUstensiles.forEach((ustensile) => {
-				const ustensileElement = document.getElementById(ustensile);
-				ustensileElement.style.display = "block";
-			});
-		});
-	
+
 		clearButton.addEventListener("click", function () {
-			allUstensiles.forEach((ustensile) => {
-				const ustensileElement = document.getElementById(ustensile);
-				ustensileElement.style.display = "block";
-			});
+			updateVisibilityUstensile("");
 		});
-	
-		allUstensiles.forEach((ustensile) => {
-			const li = document.createElement("li");
-			li.classList.add(
-				"block",
-				"px-4",
-				"py-2",
-				"text-sm",
-				"text-gray-700",
-				"hover:bg-[#FFD15B]"
-			);
-			li.setAttribute("role", "menuitem");
-			li.setAttribute("id", ustensile);
-			li.textContent = capitalizeFirstLetter(ustensile);
-	
-			ul.appendChild(li);
-			listIngredientsDiv.appendChild(ul);
-		});
+
+		updateVisibilityUstensile("");
 	}
 
 	function capitalizeFirstLetter(word) {

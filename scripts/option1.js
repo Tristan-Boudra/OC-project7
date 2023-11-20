@@ -143,7 +143,8 @@ export class Option1 {
 			if (inputValue) {
 				errorDiv.textContent = `Aucune recette ne contient ${inputValue}. Vous pouvez chercher par nom ou ingrédient.`;
 			} else {
-				errorDiv.textContent = "Aucune recette ne correspond à votre recherche. Vous pouvez chercher par nom ou ingrédient.";
+				errorDiv.textContent =
+          "Aucune recette ne correspond à votre recherche. Vous pouvez chercher par nom ou ingrédient.";
 			}
 
 			callback(searchResults);
