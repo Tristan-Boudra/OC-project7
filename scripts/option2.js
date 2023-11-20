@@ -165,14 +165,24 @@ export class Option2 {
     }
 
     this.updateAdvancedSearchFields(searchResults);
-    this.updateIngredientsDropdown(callback);
-    this.updateAppareilsDropdown(callback);
-    this.updateUstensilesDropdown(callback);
+    this.updateIngredientsDropdown(searchResults, callback);
+    this.updateAppareilsDropdown(searchResults, callback);
+    this.updateUstensilesDropdown(searchResults, callback);
   }
 
-  updateIngredientsDropdown(callback) {
-    const allUniqueIngredients = this.getUniqueIngredients();
-		const sortedIngredients = allUniqueIngredients;
+  updateIngredientsDropdown(searchResults, callback) {
+    const uniqueIngredients = new Set();
+
+    for (let i = 0; i < searchResults.length; i++) {
+      const recipe = searchResults[i];
+      for (let j = 0; j < recipe.ingredients.length; j++) {
+        const itemIngredient = recipe.ingredients[j].ingredient;
+        const oneIngredient = this.removeAccents(itemIngredient);
+        uniqueIngredients.add(oneIngredient.toLowerCase());
+      }
+    }
+
+    const sortedIngredients = Array.from(uniqueIngredients).sort();
 
     const ulDropdownIngredients = document.getElementById(
       "ul-dropdown-ingredients"
@@ -200,9 +210,15 @@ export class Option2 {
     }
   }
 
-  updateAppareilsDropdown(callback) {
-    const allUniqueAppareils = this.getUniqueAppareils();
-		const sortedAppareils = allUniqueAppareils;
+  updateAppareilsDropdown(searchResults, callback) {
+    const uniqueAppareils = new Set();
+
+    for (let i = 0; i < searchResults.length; i++) {
+      const oneRecipes = searchResults[i].appliance;
+      uniqueAppareils.add(oneRecipes.toLowerCase());
+    }
+
+    const sortedAppareils = Array.from(uniqueAppareils).sort();
 
     const ulDropdownAppareils = document.getElementById(
       "ul-dropdown-appareils"
@@ -230,10 +246,21 @@ export class Option2 {
     }
   }
 
-  updateUstensilesDropdown(callback) {
-		const allUniqueUstensiles = this.getUniqueUstensiles();
-		const sortedUstensiles = allUniqueUstensiles;
+  updateUstensilesDropdown(searchResults, callback) {
+    const uniqueUstensiles = new Set();
 
+    for (let i = 0; i < searchResults.length; i++) {
+      const recipe = searchResults[i];
+      if (Array.isArray(recipe.ustensils)) {
+        for (let j = 0; j < recipe.ustensils.length; j++) {
+          const itemUstensil = recipe.ustensils[j];
+          const ustensil = this.removeAccents(itemUstensil);
+          uniqueUstensiles.add(ustensil.toLowerCase());
+        }
+      }
+    }
+
+    const sortedUstensiles = Array.from(uniqueUstensiles).sort();
     const ulDropdownUstensiles = document.getElementById(
       "ul-dropdown-ustensiles"
     );
@@ -287,9 +314,9 @@ export class Option2 {
           const errorDiv = document.getElementById("error");
           errorDiv.style.display = "none";
           callback(recipes);
-          this.updateIngredientsDropdown(callback);
-          this.updateAppareilsDropdown(callback);
-          this.updateUstensilesDropdown(callback);
+          this.updateIngredientsDropdown(recipes, callback);
+          this.updateAppareilsDropdown(recipes, callback);
+          this.updateUstensilesDropdown(recipes, callback);
         }
 
         this.handleInputAndTags(callback);
