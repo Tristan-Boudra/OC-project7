@@ -9,10 +9,24 @@ document.addEventListener("DOMContentLoaded", function () {
   const option2 = new Option2();
 
   const searchInput = document.getElementById("search-input");
-  searchInput.addEventListener("input", function () {
+  searchInput.addEventListener("input", function (event) {
     option2.handleInputAndTags(function (results) {
       displayRecipes(results);
     });
+
+    const inputValue = event.target.value;
+
+		// Check si l'input est valide
+		const validInput = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]*$/.test(inputValue);
+
+		if (!validInput) {
+			// Affiche message d'erreur
+			const errorMessage = document.getElementById("error");
+			errorMessage.style.display = "block";
+			errorMessage.textContent = "Veuillez entrer uniquement des lettres";
+
+			displayRecipes([]);
+		}
   });
 
   function countRecipes(count) {
@@ -319,7 +333,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     input.addEventListener("input", function () {
       const inputValue = input.value.toLowerCase();
-      updateVisibilityIngredient(inputValue);
+      const errorMessage = document.getElementById("error");
+
+			// Check si l'input est valide
+			const validInput = /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9\s]*$/.test(inputValue);
+
+			if (!validInput) {
+				// Affiche message d'erreur
+				clearButton.style.display = "block";
+				errorMessage.style.display = "block";
+				errorMessage.textContent = "Veuillez entrer uniquement des lettres";
+
+				displayRecipes([]);
+			} else {
+				errorMessage.style.display = "none";
+				updateVisibilityIngredient(inputValue);
+				displayRecipes(recipes);
+			}
     });
 
     clearButton.addEventListener("click", function () {
@@ -393,8 +423,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     input.addEventListener("input", function () {
-      const inputValue = input.value.trim().toLowerCase();
-      updateVisibilityAppareil(inputValue);
+      const inputValue = input.value.toLowerCase();
+			const errorMessage = document.getElementById("error");
+
+			// Check si l'input est valide
+			const validInput = /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9\s]*$/.test(inputValue);
+
+			if (!validInput) {
+				// Affiche message d'erreur
+				clearButton.style.display = "block";
+				errorMessage.style.display = "block";
+				errorMessage.textContent = "Veuillez entrer uniquement des lettres";
+
+				displayRecipes([]);
+			} else {
+				errorMessage.style.display = "none";
+				updateVisibilityAppareil(inputValue);
+				displayRecipes(recipes);
+			}
     });
 
     clearButton.addEventListener("click", function () {
@@ -470,7 +516,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     input.addEventListener("input", function () {
       const inputValue = input.value.toLowerCase();
-      updateVisibilityUstensile(inputValue);
+      const errorMessage = document.getElementById("error");
+
+			// Check si l'input est valide
+			const validInput = /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9\s]*$/.test(inputValue);
+
+			if (!validInput) {
+				// Affiche message d'erreur
+				clearButton.style.display = "block";
+				errorMessage.style.display = "block";
+				errorMessage.textContent = "Veuillez entrer uniquement des lettres";
+
+				displayRecipes([]);
+			} else {
+				errorMessage.style.display = "none";
+				updateVisibilityUstensile(inputValue);
+				displayRecipes(recipes);
+			}
     });
 
     clearButton.addEventListener("click", function () {
