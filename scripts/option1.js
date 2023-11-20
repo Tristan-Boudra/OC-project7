@@ -157,14 +157,23 @@ export class Option1 {
 		}
 
 		this.updateAdvancedSearchFields(searchResults);
-		this.updateIngredientsDropdown(callback);
-		this.updateAppareilsDropdown(callback);
-		this.updateUstensilesDropdown(callback);
+		this.updateIngredientsDropdown(searchResults, callback);
+		this.updateAppareilsDropdown(searchResults, callback);
+		this.updateUstensilesDropdown(searchResults, callback);
 	}
 
-	updateIngredientsDropdown(callback) {
-		const allUniqueIngredients = this.getUniqueIngredients();
-		const sortedIngredients = allUniqueIngredients;
+	updateIngredientsDropdown(searchResults, callback) {
+		const uniqueIngredients = new Set();
+
+		searchResults.forEach((recipe) => {
+			recipe.ingredients.forEach((item) => {
+				const oneIngredient = item.ingredient;
+				const itemIngredient = this.removeAccents(oneIngredient);
+				uniqueIngredients.add(itemIngredient.toLowerCase());
+			});
+		});
+
+		const sortedIngredients = Array.from(uniqueIngredients).sort();
 
 		const ulDropdownIngredients = document.getElementById(
 			"ul-dropdown-ingredients"
@@ -191,9 +200,15 @@ export class Option1 {
 		});
 	}
 
-	updateAppareilsDropdown(callback) {
-		const allUniqueAppareils = this.getUniqueAppareils();
-		const sortedAppareils = allUniqueAppareils;
+	updateAppareilsDropdown(searchResults, callback) {
+		const uniqueAppareils = new Set();
+
+		searchResults.forEach((recipe) => {
+			const oneRecipes = recipe.appliance;
+			uniqueAppareils.add(oneRecipes.toLowerCase());
+		});
+
+		const sortedAppareils = Array.from(uniqueAppareils).sort();
 
 		const ulDropdownAppareils = document.getElementById(
 			"ul-dropdown-appareils"
@@ -220,9 +235,17 @@ export class Option1 {
 		});
 	}
 
-	updateUstensilesDropdown(callback) {
-		const allUniqueUstensiles = this.getUniqueUstensiles();
-		const sortedUstensiles = allUniqueUstensiles;
+	updateUstensilesDropdown(searchResults, callback) {
+		const uniqueUstensiles = new Set();
+
+		searchResults.forEach((recipe) => {
+			recipe.ustensils.forEach((item) => {
+				const itemUstensil = this.removeAccents(item);
+				uniqueUstensiles.add(itemUstensil.toLowerCase());
+			});
+		});
+
+		const sortedUstensiles = Array.from(uniqueUstensiles).sort();
 
 		const ulDropdownUstensiles = document.getElementById(
 			"ul-dropdown-ustensiles"
@@ -277,9 +300,9 @@ export class Option1 {
 					const errorDiv = document.getElementById("error");
 					errorDiv.style.display = "none";
 					callback(recipes);
-					this.updateIngredientsDropdown(callback);
-					this.updateAppareilsDropdown(callback);
-					this.updateUstensilesDropdown(callback);
+					this.updateIngredientsDropdown(recipes, callback);
+					this.updateAppareilsDropdown(recipes, callback);
+					this.updateUstensilesDropdown(recipes, callback);
 				}
 
 				this.handleInputAndTags(callback);
