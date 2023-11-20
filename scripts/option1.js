@@ -143,8 +143,7 @@ export class Option1 {
 			if (inputValue) {
 				errorDiv.textContent = `Aucune recette ne contient ${inputValue}. Vous pouvez chercher par nom ou ingrédient.`;
 			} else {
-				errorDiv.textContent =
-          "Aucune recette ne correspond à votre recherche. Vous pouvez chercher par nom ou ingrédient.";
+				errorDiv.textContent = "Aucune recette ne correspond à votre recherche. Vous pouvez chercher par nom ou ingrédient.";
 			}
 
 			callback(searchResults);
@@ -158,23 +157,14 @@ export class Option1 {
 		}
 
 		this.updateAdvancedSearchFields(searchResults);
-		this.updateIngredientsDropdown(searchResults, callback);
-		this.updateAppareilsDropdown(searchResults, callback);
-		this.updateUstensilesDropdown(searchResults, callback);
+		this.updateIngredientsDropdown(callback);
+		this.updateAppareilsDropdown(callback);
+		this.updateUstensilesDropdown(callback);
 	}
 
-	updateIngredientsDropdown(searchResults, callback) {
-		const uniqueIngredients = new Set();
-
-		searchResults.forEach((recipe) => {
-			recipe.ingredients.forEach((item) => {
-				uniqueIngredients.add(
-					this.removeAccents(item.ingredient.toLowerCase())
-				);
-			});
-		});
-
-		const sortedIngredients = Array.from(uniqueIngredients).sort();
+	updateIngredientsDropdown(callback) {
+		const allUniqueIngredients = this.getUniqueIngredients();
+		const sortedIngredients = allUniqueIngredients;
 
 		const ulDropdownIngredients = document.getElementById(
 			"ul-dropdown-ingredients"
@@ -201,14 +191,9 @@ export class Option1 {
 		});
 	}
 
-	updateAppareilsDropdown(searchResults, callback) {
-		const uniqueAppareils = new Set();
-
-		searchResults.forEach((recipe) => {
-			uniqueAppareils.add(this.removeAccents(recipe.appliance.toLowerCase()));
-		});
-
-		const sortedAppareils = Array.from(uniqueAppareils).sort();
+	updateAppareilsDropdown(callback) {
+		const allUniqueAppareils = this.getUniqueAppareils();
+		const sortedAppareils = allUniqueAppareils;
 
 		const ulDropdownAppareils = document.getElementById(
 			"ul-dropdown-appareils"
@@ -235,16 +220,9 @@ export class Option1 {
 		});
 	}
 
-	updateUstensilesDropdown(searchResults, callback) {
-		const uniqueUstensiles = new Set();
-
-		searchResults.forEach((recipe) => {
-			recipe.ustensils.forEach((item) => {
-				uniqueUstensiles.add(this.removeAccents(item.toLowerCase()));
-			});
-		});
-
-		const sortedUstensiles = Array.from(uniqueUstensiles).sort();
+	updateUstensilesDropdown(callback) {
+		const allUniqueUstensiles = this.getUniqueUstensiles();
+		const sortedUstensiles = allUniqueUstensiles;
 
 		const ulDropdownUstensiles = document.getElementById(
 			"ul-dropdown-ustensiles"
@@ -299,9 +277,9 @@ export class Option1 {
 					const errorDiv = document.getElementById("error");
 					errorDiv.style.display = "none";
 					callback(recipes);
-					this.updateIngredientsDropdown(recipes, callback);
-					this.updateAppareilsDropdown(recipes, callback);
-					this.updateUstensilesDropdown(recipes, callback);
+					this.updateIngredientsDropdown(callback);
+					this.updateAppareilsDropdown(callback);
+					this.updateUstensilesDropdown(callback);
 				}
 
 				this.handleInputAndTags(callback);
