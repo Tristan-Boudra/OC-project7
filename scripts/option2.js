@@ -172,7 +172,7 @@ export class Option2 {
 
   updateIngredientsDropdown(searchResults, callback) {
     const uniqueIngredients = new Set();
-
+  
     for (let i = 0; i < searchResults.length; i++) {
       const recipe = searchResults[i];
       for (let j = 0; j < recipe.ingredients.length; j++) {
@@ -181,74 +181,40 @@ export class Option2 {
         uniqueIngredients.add(oneIngredient.toLowerCase());
       }
     }
-
+  
     const sortedIngredients = Array.from(uniqueIngredients).sort();
-
-    const ulDropdownIngredients = document.getElementById(
-      "ul-dropdown-ingredients"
-    );
+    const ulDropdownIngredients = document.getElementById("ul-dropdown-ingredients");
     ulDropdownIngredients.innerHTML = "";
-
+  
     for (let k = 0; k < sortedIngredients.length; k++) {
       const ingredient = sortedIngredients[k];
-      const li = document.createElement("li");
-      li.addEventListener("click", () => {
-        this.addTags(ingredient, callback);
-      });
-      li.classList.add(
-        "block",
-        "px-4",
-        "py-2",
-        "text-sm",
-        "text-gray-700",
-        "hover:bg-[#FFD15B]"
-      );
-      li.setAttribute("role", "menuitem");
-      li.setAttribute("id", ingredient);
-      li.textContent = this.capitalizeFirstLetter(ingredient);
+      const li = this.createListItem(ingredient, callback);
       ulDropdownIngredients.appendChild(li);
     }
   }
-
+  
   updateAppareilsDropdown(searchResults, callback) {
     const uniqueAppareils = new Set();
-
+  
     for (let i = 0; i < searchResults.length; i++) {
       const oneRecipes = searchResults[i].appliance;
       uniqueAppareils.add(oneRecipes.toLowerCase());
     }
-
+  
     const sortedAppareils = Array.from(uniqueAppareils).sort();
-
-    const ulDropdownAppareils = document.getElementById(
-      "ul-dropdown-appareils"
-    );
+    const ulDropdownAppareils = document.getElementById("ul-dropdown-appareils");
     ulDropdownAppareils.innerHTML = "";
-
+  
     for (let k = 0; k < sortedAppareils.length; k++) {
       const appareil = sortedAppareils[k];
-      const li = document.createElement("li");
-      li.addEventListener("click", () => {
-        this.addTags(appareil, callback);
-      });
-      li.classList.add(
-        "block",
-        "px-4",
-        "py-2",
-        "text-sm",
-        "text-gray-700",
-        "hover:bg-[#FFD15B]"
-      );
-      li.setAttribute("role", "menuitem");
-      li.setAttribute("id", appareil);
-      li.textContent = this.capitalizeFirstLetter(appareil);
+      const li = this.createListItem(appareil, callback);
       ulDropdownAppareils.appendChild(li);
     }
   }
-
+  
   updateUstensilesDropdown(searchResults, callback) {
     const uniqueUstensiles = new Set();
-
+  
     for (let i = 0; i < searchResults.length; i++) {
       const recipe = searchResults[i];
       if (Array.isArray(recipe.ustensils)) {
@@ -259,33 +225,37 @@ export class Option2 {
         }
       }
     }
-
+  
     const sortedUstensiles = Array.from(uniqueUstensiles).sort();
-    const ulDropdownUstensiles = document.getElementById(
-      "ul-dropdown-ustensiles"
-    );
+    const ulDropdownUstensiles = document.getElementById("ul-dropdown-ustensiles");
     ulDropdownUstensiles.innerHTML = "";
-
+  
     for (let k = 0; k < sortedUstensiles.length; k++) {
       const ustensile = sortedUstensiles[k];
-      const li = document.createElement("li");
-      li.addEventListener("click", () => {
-        this.addTags(ustensile, callback);
-      });
-      li.classList.add(
-        "block",
-        "px-4",
-        "py-2",
-        "text-sm",
-        "text-gray-700",
-        "hover:bg-[#FFD15B]"
-      );
-      li.setAttribute("role", "menuitem");
-      li.setAttribute("id", ustensile);
-      li.textContent = this.capitalizeFirstLetter(ustensile);
+      const li = this.createListItem(ustensile, callback);
       ulDropdownUstensiles.appendChild(li);
     }
   }
+
+  createListItem(text, callback) {
+    const li = document.createElement("li");
+    li.addEventListener("click", () => {
+      this.addTags(text, callback);
+    });
+    li.classList.add(
+      "block",
+      "px-4",
+      "py-2",
+      "text-sm",
+      "text-gray-700",
+      "hover:bg-[#FFD15B]"
+    );
+    li.setAttribute("role", "menuitem");
+    li.setAttribute("id", text);
+    li.textContent = this.capitalizeFirstLetter(text);
+    return li;
+  }
+  
   addTags = function (items, callback) {
     if (!allTags.includes(items)) {
       const container = document.getElementById("ul-list-tags");
@@ -384,7 +354,8 @@ export class Option2 {
       document.getElementById("ustensile-search-field"),
       Array.from(uniqueUstensiles)
     );
-  }
+  };
+
   updateSearchField(fieldElement, options) {
     if (fieldElement) {
       fieldElement.innerHTML = "";
@@ -397,7 +368,7 @@ export class Option2 {
         fieldElement.appendChild(optionElement);
       }
     }
-  }
+  };
 
   getSelectedTags() {
     const tagElements = document.querySelectorAll("#ul-list-tags li");
@@ -409,7 +380,7 @@ export class Option2 {
     }
 
     return selectedTags;
-  }
+  };
 
   valueInput(callback) {
     const input = document.getElementById("search-input");
