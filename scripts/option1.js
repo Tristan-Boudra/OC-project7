@@ -162,115 +162,69 @@ export class Option1 {
 		this.updateUstensilesDropdown(searchResults, callback);
 	}
 
+	updateDropdown(searchResults, callback, ulId, addItemFn) {
+		const uniqueItems = new Set();
+	
+		searchResults.forEach((recipe) => {
+			const items = addItemFn(recipe);
+			items.forEach((item) => {
+				const processedItem = this.removeAccents(item);
+				uniqueItems.add(processedItem.toLowerCase());
+			});
+		});
+	
+		const sortedItems = Array.from(uniqueItems).sort();
+	
+		const ulDropdown = document.getElementById(ulId);
+		ulDropdown.innerHTML = "";
+	
+		sortedItems.forEach((item) => {
+			const li = document.createElement("li");
+			li.addEventListener("click", () => {
+				this.addTags(item, callback);
+			});
+			li.classList.add(
+				"block",
+				"px-4",
+				"py-2",
+				"text-sm",
+				"text-gray-700",
+				"hover:bg-[#FFD15B]"
+			);
+			li.setAttribute("role", "menuitem");
+			li.setAttribute("id", item);
+			li.textContent = this.capitalizeFirstLetter(item);
+			ulDropdown.appendChild(li);
+		});
+	}
+	
 	updateIngredientsDropdown(searchResults, callback) {
-		const uniqueIngredients = new Set();
-
-		searchResults.forEach((recipe) => {
-			recipe.ingredients.forEach((item) => {
-				const oneIngredient = item.ingredient;
-				const itemIngredient = this.removeAccents(oneIngredient);
-				uniqueIngredients.add(itemIngredient.toLowerCase());
-			});
-		});
-
-		const sortedIngredients = Array.from(uniqueIngredients).sort();
-
-		const ulDropdownIngredients = document.getElementById(
-			"ul-dropdown-ingredients"
+		this.updateDropdown(
+			searchResults,
+			callback,
+			"ul-dropdown-ingredients",
+			(recipe) => recipe.ingredients.map((item) => item.ingredient)
 		);
-		ulDropdownIngredients.innerHTML = "";
-
-		sortedIngredients.forEach((ingredient) => {
-			const li = document.createElement("li");
-			li.addEventListener("click", () => {
-				this.addTags(ingredient, callback);
-			});
-			li.classList.add(
-				"block",
-				"px-4",
-				"py-2",
-				"text-sm",
-				"text-gray-700",
-				"hover:bg-[#FFD15B]"
-			);
-			li.setAttribute("role", "menuitem");
-			li.setAttribute("id", ingredient);
-			li.textContent = this.capitalizeFirstLetter(ingredient);
-			ulDropdownIngredients.appendChild(li);
-		});
 	}
-
+	
 	updateAppareilsDropdown(searchResults, callback) {
-		const uniqueAppareils = new Set();
-
-		searchResults.forEach((recipe) => {
-			const oneRecipes = recipe.appliance;
-			uniqueAppareils.add(oneRecipes.toLowerCase());
-		});
-
-		const sortedAppareils = Array.from(uniqueAppareils).sort();
-
-		const ulDropdownAppareils = document.getElementById(
-			"ul-dropdown-appareils"
+		this.updateDropdown(
+			searchResults,
+			callback,
+			"ul-dropdown-appareils",
+			(recipe) => [recipe.appliance]
 		);
-		ulDropdownAppareils.innerHTML = "";
-
-		sortedAppareils.forEach((appareil) => {
-			const li = document.createElement("li");
-			li.addEventListener("click", () => {
-				this.addTags(appareil, callback);
-			});
-			li.classList.add(
-				"block",
-				"px-4",
-				"py-2",
-				"text-sm",
-				"text-gray-700",
-				"hover:bg-[#FFD15B]"
-			);
-			li.setAttribute("role", "menuitem");
-			li.setAttribute("id", appareil);
-			li.textContent = this.capitalizeFirstLetter(appareil);
-			ulDropdownAppareils.appendChild(li);
-		});
 	}
-
+	
 	updateUstensilesDropdown(searchResults, callback) {
-		const uniqueUstensiles = new Set();
-
-		searchResults.forEach((recipe) => {
-			recipe.ustensils.forEach((item) => {
-				const itemUstensil = this.removeAccents(item);
-				uniqueUstensiles.add(itemUstensil.toLowerCase());
-			});
-		});
-
-		const sortedUstensiles = Array.from(uniqueUstensiles).sort();
-
-		const ulDropdownUstensiles = document.getElementById(
-			"ul-dropdown-ustensiles"
+		this.updateDropdown(
+			searchResults,
+			callback,
+			"ul-dropdown-ustensiles",
+			(recipe) => recipe.ustensils
 		);
-		ulDropdownUstensiles.innerHTML = "";
-
-		sortedUstensiles.forEach((ustensile) => {
-			const li = document.createElement("li");
-			li.addEventListener("click", () => {
-				this.addTags(ustensile, callback);
-			});
-			li.classList.add(
-				"block",
-				"px-4",
-				"py-2",
-				"text-sm",
-				"text-gray-700",
-				"hover:bg-[#FFD15B]"
-			);
-			li.setAttribute("role", "menuitem");
-			li.setAttribute("id", ustensile);
-			li.textContent = this.capitalizeFirstLetter(ustensile);
-			ulDropdownUstensiles.appendChild(li);
-		});
 	}
+	
 
 	addTags = (items, callback) => {
 		if (!allTags.includes(items)) {
